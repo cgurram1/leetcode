@@ -6,7 +6,6 @@ class Solution:
         res = 1
         skip = 0
         while(left < len(nums) -1 ):
-            print(nums)
             if count < 2 and nums[left+1] == nums[left]:
                 left+=1
                 right+=1
