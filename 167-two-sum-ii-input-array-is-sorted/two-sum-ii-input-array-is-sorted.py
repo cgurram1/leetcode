@@ -3,9 +3,10 @@ class Solution:
       right = len(numbers) - 1
       left = 0
       while(left != right):
-        if numbers[left] + numbers[right] > target:
+        curr_sum = numbers[left] + numbers[right]
+        if curr_sum > target:
             right-=1
-        elif numbers[left] + numbers[right] < target:
+        elif curr_sum < target:
             left+=1
         else:
             return [left + 1,right+1] 
