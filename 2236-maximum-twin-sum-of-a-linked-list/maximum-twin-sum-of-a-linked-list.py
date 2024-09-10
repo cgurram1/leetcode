@@ -5,13 +5,23 @@
 #         self.next = next
 class Solution:
     def pairSum(self, head: Optional[ListNode]) -> int:
-        tempArr = []
-        pointer = head
-        while(pointer != None):
-            tempArr.append(pointer.val)
-            pointer = pointer.next
+        slow = head
+        fast = head
+        prev = None
+        nextNode = None
         res = float('-inf')
-        N = len(tempArr)
-        for i in range(N):
-            res = max(res,tempArr[i] + tempArr[N - i - 1])
+        while(fast.next!= None and fast.next.next != None):
+            fast = fast.next.next
+            nextNode = slow.next
+            slow.next = prev
+            prev = slow
+            slow = nextNode
+        nextNode = slow.next
+        slow.next = prev
+        prev = slow
+        slow = nextNode
+        while(slow!= None):
+            res = max(res,slow.val + prev.val)
+            slow = slow.next
+            prev = prev.next
         return res
