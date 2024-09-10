@@ -12,6 +12,6 @@ class Solution:
             pointer = pointer.next
         res = float('-inf')
         N = len(tempArr)
-        for i in range(len(tempArr)):
+        for i in range(N):
             res = max(res,tempArr[i] + tempArr[N - i - 1])
         return res
