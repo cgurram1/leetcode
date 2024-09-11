@@ -13,8 +13,12 @@ class Solution:
             #Body
             if node.val == val:
                 return node
-            leftRes = myRec(node.left)
-            rightRes = myRec(node.right)
+            leftRes = None
+            rightRes = None
+            if val > node.val:
+                rightRes = myRec(node.right)
+            else:
+                leftRes = myRec(node.left)
             if leftRes:
                 return leftRes
             elif rightRes:
