@@ -13,16 +13,9 @@ class Solution:
             #Body
             if node.val == val:
                 return node
-            leftRes = None
-            rightRes = None
             if val > node.val:
-                rightRes = myRec(node.right)
+                return myRec(node.right)
             else:
-                leftRes = myRec(node.left)
-            if leftRes:
-                return leftRes
-            elif rightRes:
-                return rightRes
-            return None
+                return myRec(node.left)
         return myRec(root)
         
