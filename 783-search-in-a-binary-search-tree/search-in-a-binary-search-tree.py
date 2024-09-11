@@ -15,11 +15,10 @@ class Solution:
                 return node
             leftRes = myRec(node.left)
             rightRes = myRec(node.right)
-            if leftRes or rightRes:
-                if leftRes:
-                    return leftRes
-                else:
-                    return rightRes
+            if leftRes:
+                return leftRes
+            elif rightRes:
+                return rightRes
             return None
         return myRec(root)
         
