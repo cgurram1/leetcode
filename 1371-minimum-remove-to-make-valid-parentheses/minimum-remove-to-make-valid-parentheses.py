@@ -16,6 +16,8 @@ class Solution:
         for i in range(len(s)):
             if i not in toRemove:
                 res+=s[i]
+        # for i in toRemove:
+        #     s = s[:i] + s[i+1:]
         return res
 
 
