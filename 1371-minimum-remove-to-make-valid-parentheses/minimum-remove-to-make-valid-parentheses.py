@@ -19,11 +19,7 @@ class Solution:
                     openCount-=1
             elif s[i] == ')':
                 openCount+=1
-        res = ""
-        for i in range(len(s)):
-            if i not in toRemove:
-                res+=s[i]
-        return res
+        return ''.join([s[i] for i in range(len(s)) if i not in toRemove])
 
 
 
