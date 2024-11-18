@@ -4,7 +4,6 @@ class Solution:
         res = ""
         while(num != 0):
             curr_num = num % 10
-            print(curr_num)
             num = num // 10
             if curr_num == 4:
                 if power == 1:
