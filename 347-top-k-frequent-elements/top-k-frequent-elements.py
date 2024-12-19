@@ -1,18 +1,16 @@
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        mydict = {}
-        for val in nums:
-            if val not in mydict:
-                mydict[val] = 1
+        myDict = {}
+        for i in nums:
+            if i in myDict:
+                myDict[i] = myDict[i] + 1
             else:
-                mydict[val] += 1
-        sorted_myDict = dict(sorted(mydict.items(), key = lambda item : item[1], reverse = True))
-        result = []
+                myDict[i] = 1
+        sorted_dict_desc = dict(sorted(myDict.items(), key=lambda item: item[1], reverse=True))
+        res = []
         count = 0
-        print(sorted_myDict)
-        for key in sorted_myDict:
-            if count == k:
-                break
-            count +=1
-            result.append(key)
-        return result
+        for key in sorted_dict_desc:
+            if count < k:
+                res.append(key)
+                count+=1
+        return res
