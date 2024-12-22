@@ -6,21 +6,19 @@
 #         self.right = right
 class Solution:
     def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
-        if not root:
-            return [] 
-        queue = [root]
-        # levelOrder = []
-        right = []
-        while(queue):
-            length = len(queue)
-            arr = []
-            for i in range(length):
-                popped = queue.pop(0)
-                arr.append(popped.val)
-                if popped.left:
-                    queue.append(popped.left)
-                if popped.right:
-                    queue.append(popped.right)
-            right.append(arr[-1])
-        # print(levelOrder)
-        return right
+        if root:
+            queue = [root]
+            resArr = []
+            while(queue):
+                length = len(queue)
+                for i in range(length):
+                    curr = queue.pop(0)
+                    if curr.left:
+                        queue.append(curr.left)
+                    if curr.right:
+                        queue.append(curr.right)
+                    res = curr.val
+                resArr.append(res)
+            return resArr
+        return []
+             
