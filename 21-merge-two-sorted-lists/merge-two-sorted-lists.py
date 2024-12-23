@@ -11,12 +11,10 @@ class Solution:
             if root1 and root2:
                 if root1.val < root2.val:
                     curr.next = root1
-                    curr = curr.next
-                    myFun(root1.next,root2,curr)
+                    myFun(root1.next,root2,curr.next)
                 else:
                     curr.next = root2
-                    curr = curr.next
-                    myFun(root1,root2.next,curr)
+                    myFun(root1,root2.next,curr.next)
             else:
                 if root1:
                     curr.next = root1
