@@ -8,10 +8,8 @@ class Solution:
         slow = head
         fast = head
         prev = None
-        count = 0
         nextNode = None
         while fast and fast.next:
-            count+=1
             fast = fast.next.next
             nextNode = slow.next
             slow.next = prev
