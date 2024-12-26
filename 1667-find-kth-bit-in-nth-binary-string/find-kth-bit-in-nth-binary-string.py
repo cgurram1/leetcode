@@ -14,6 +14,5 @@ class Solution:
             string = myRec(n-1)
             return string + "1" + invert(string)[::-1]
         myres = myRec(n)
-        print(myres)
         return myres[k-1]
         
