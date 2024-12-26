@@ -13,6 +13,6 @@ class Solution:
                 return "0"
             string = myRec(n-1)
             return string + "1" + invert(string)[::-1]
-        myres = myRec(n)
+        myres = myRec(math.floor(math.log2(k)) + 1)
+        # print(myres)
         return myres[k-1]
-        
