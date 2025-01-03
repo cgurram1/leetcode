@@ -18,6 +18,5 @@ class Solution:
                 flag = 0
             else:
                 count = 1
-            print(i,count)
             res = max(res,count)
         return max(res,count)
