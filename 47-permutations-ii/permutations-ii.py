@@ -1,18 +1,18 @@
 class Solution:
     def permuteUnique(self, nums: List[int]) -> List[List[int]]:
-        def myRec(arr,indexes):
-            if len(indexes) == len(nums):
+        def myRec(arr,visited):
+            if len(arr) == len(nums):
                 if arr[:] not in res:
                     res.append(arr[:])
                 return
             for i in range(len(nums)):
-                if i not in indexes:
+                if visited[i] == False:
                     arr.append(nums[i])
-                    indexes.append(i)
-                    myRec(arr,indexes)
+                    visited[i] = True
+                    myRec(arr,visited)
                     arr.pop()
-                    indexes.pop()
+                    visited[i] = False
         res = []
-        myRec([],[])
+        myRec([],[False] * len(nums))
         return res
                 
