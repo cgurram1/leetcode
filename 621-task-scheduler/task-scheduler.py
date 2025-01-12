@@ -2,7 +2,6 @@ from collections import Counter
 class Solution:
     def leastInterval(self, tasks: List[str], n: int) -> int:
         string = "".join(tasks)
-        print(string)
         freqArr = Counter(string)
         arr = []
         for i in freqArr:
