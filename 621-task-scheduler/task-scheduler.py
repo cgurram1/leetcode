@@ -5,7 +5,7 @@ class Solution:
         freqArr = Counter(string)
         arr = []
         for i in freqArr:
-            arr.append((-freqArr[i],i))
+            arr.append(-freqArr[i])
         heapq.heapify(arr)
         index = 0
         q = []
@@ -18,9 +18,9 @@ class Solution:
                     popped = heapq.heappop(arr)
                     res+=1
                     index+=1
-                    currCount = -popped[0] - 1
+                    currCount = -popped - 1
                     if currCount > 0:
-                        q.append((-currCount,popped[1]))
+                        q.append(-currCount)
                 else:
                     res+=1
                     index+=1
