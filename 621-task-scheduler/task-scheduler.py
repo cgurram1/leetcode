@@ -8,21 +8,21 @@ class Solution:
             arr.append((-freqArr[i],i))
         heapq.heapify(arr)
         index = 0
-        newStr = ""
         q = []
+        res = 0
         while(True):
             if len(q) == 0 and len(arr) == 0:
-                return len(newStr)
+                return res
             if index <= n:
                 if len(arr) > 0:
                     popped = heapq.heappop(arr)
-                    newStr+=popped[1]
+                    res+=1
                     index+=1
                     currCount = -popped[0] - 1
                     if currCount > 0:
                         q.append((-currCount,popped[1]))
                 else:
-                    newStr+="0"
+                    res+=1
                     index+=1
             else:
                 arr.extend(q)
