@@ -12,6 +12,8 @@ class Solution:
             for j in range(index,len(candidates)):
                 if j > index and candidates[j] == candidates[j-1]:
                     continue
+                if candidates[j] > target:
+                    break
                 arr.append(candidates[j])
                 myFun(j+1,arr,s+candidates[j])
                 arr.pop(-1)
