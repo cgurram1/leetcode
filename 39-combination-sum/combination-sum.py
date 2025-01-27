@@ -5,11 +5,11 @@ class Solution:
             if s == target:
                 res.append(arr[:])
                 return
-            if s > target or index == len(candidates):
+            if s > target:
                 return
-            arr.append(candidates[index])
-            myFun(index, arr,s+candidates[index])
-            arr.pop(-1)
-            myFun(index+1,arr,s)
+            for j in range(index,len(candidates)):
+                arr.append(candidates[j])
+                myFun(j,arr,s+candidates[j])
+                arr.pop(-1)
         myFun(0,[],0)
         return res
