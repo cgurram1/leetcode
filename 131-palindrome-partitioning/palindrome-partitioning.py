@@ -1,16 +1,14 @@
 class Solution:
     def partition(self, s: str) -> List[List[str]]:
         res = []
-        path = []
-        def myFun(i):
-            if i >= len(s):
+        def myFun(index,s,path,res):
+            if index == len(s):
                 res.append(path[:])
                 return
-            for j in range(i,len(s)):
-                if s[i:j + 1] == s[i:j+1][::-1]:
-                    path.append(s[i:j+1])
-                    myFun(j+1)
-                    path.pop()
-        myFun(0)
+            for i in range(index,len(s)):
+                if s[index:i+1] == s[index:i+1][::-1]:
+                    path.append(s[index:i+1])
+                    myFun(i+1,s,path,res)
+                    path.pop(-1)
+        myFun(0,s,[],res)
         return res
-        
