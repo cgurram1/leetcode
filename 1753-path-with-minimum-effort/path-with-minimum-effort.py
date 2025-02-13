@@ -22,5 +22,4 @@ class Solution:
                     if new_effort < distance[nexti][nextj]:
                         distance[nexti][nextj] = new_effort
                         heapq.heappush(pq,(new_effort,(nexti,nextj)))
-        print(distance)
         return distance[row-1][col-1]
