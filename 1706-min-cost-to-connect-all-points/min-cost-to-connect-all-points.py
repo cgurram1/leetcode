@@ -4,7 +4,7 @@ class Solution:
         visited = set()
         res = 0
         pq = [(0, 0)]
-        while len(visited) < V:
+        while pq:
             weight, node = heapq.heappop(pq)
             if node in visited:
                 continue
