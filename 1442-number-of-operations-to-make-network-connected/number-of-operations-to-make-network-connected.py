@@ -1,5 +1,7 @@
 class Solution:
     def makeConnected(self, n: int, connections: List[List[int]]) -> int:
+        if len(connections) < n - 1:
+            return -1
         parents = [i for i in range(n)]
         rank = [0 for _ in range(n)]
         def findPar(x):
@@ -19,7 +21,6 @@ class Solution:
             else:
                 parents[par_v] = parents[par_u]
             return False
-        
         extraEdges = 0
         for connection in connections:
             if union(connection[0],connection[1]):
