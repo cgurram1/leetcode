@@ -1,7 +1,5 @@
 class Solution:
     def makeConnected(self, n: int, connections: List[List[int]]) -> int:
-        if len(connections) < n - 1:
-            return -1
         parents = [i for i in range(n)]
         rank = [0 for _ in range(n)]
         def findPar(x):
