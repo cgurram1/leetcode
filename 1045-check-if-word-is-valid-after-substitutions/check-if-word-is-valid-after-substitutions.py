@@ -1,9 +1,20 @@
 class Solution:
     def isValid(self, s: str) -> bool:
-        while("abc" in s):
-            index = s.index("abc")
-            s = s[:index] + s[index + 3:]
-        if len(s) > 0:
+        stack = []
+        for ch in s:
+            if ch !='c':
+                stack.append(ch)
+            else:
+                if len(stack) >= 2 and stack[-1] + stack[-2] == "ba":
+                    stack.pop(-1)
+                    stack.pop(-1)
+                else:
+                    stack.append(ch)
+        if stack:
             return False
         return True
+                    
+
+        
+
         
