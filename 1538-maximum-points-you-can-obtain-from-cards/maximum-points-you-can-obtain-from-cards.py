@@ -3,15 +3,14 @@ class Solution:
         l = 0
         r = len(cardPoints) - k - 1
         k_sum = sum(cardPoints[l:r+1])
-        total_sum = k_sum + sum(cardPoints[r+1:])
-        curr_max = float('-inf')
+        curr_min = float('inf')
         while(r < len(cardPoints)-1):
-            print(l,r,k_sum,curr_max)
-            curr_max = max(curr_max, total_sum - k_sum)
+            curr_min = min(curr_min, k_sum)
             r+=1
             k_sum+=cardPoints[r]
             k_sum-=cardPoints[l]
             l+=1
-        return max(curr_max, total_sum - k_sum)
+        curr_min = min(curr_min, k_sum)
+        return sum(cardPoints) - curr_min
 
 
