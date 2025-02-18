@@ -14,7 +14,6 @@ class Solution:
         right_sum = [0] * n
         stack = []
         for i in range(n - 1, -1, -1):
-            print(stack)
             while stack and heights[stack[-1]] > heights[i]:
                 stack.pop()
             if stack:
