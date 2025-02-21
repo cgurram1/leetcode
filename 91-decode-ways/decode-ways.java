@@ -1,31 +1,26 @@
 class Solution {
     public int numDecodings(String s) {
-        Map<String,Character> myMap = new HashMap<>();
-        Map<String,Integer> dp = new HashMap<>();
-        // Set<String> mySet = new HashSet<>();
-        for(int i = 1;i<27;i++){
-            myMap.put(i+"",(char)(65 + i-1));
-        }
-        return rec(s,0,myMap,dp);
+        int[] dp = new int[s.length()+1];
+        Arrays.fill(dp,-1);
+        return rec(s,0,dp);
     }
-    public static int rec(String next,int index,Map<String,Character> myMap, Map<String,Integer> dp){
-        if(next == ""){
+    public static int rec(String next,int index,int [] dp){
+        if(index == next.length()){
             return 1;
         }
-        if(dp.containsKey(next)){
-            return dp.get(next);
+        if(dp[index] != -1){
+            return dp[index];
         }
         int one = 0;
         int two = 0;
-        if(Integer.valueOf(next.substring(0, 1)) > 0 && Integer.valueOf(next.substring(0, 1)) < 10){
-            one = rec(next.substring(1,next.length()),index+1,myMap,dp);
+        if(Integer.valueOf(next.substring(index, index + 1)) > 0 && Integer.valueOf(next.substring(index, index + 1)) < 10){
+            one = rec(next,index+1,dp);
         }
-        if(next.length() > 1){
-            if(Integer.valueOf(next.substring(0, 1)) != 0 && Integer.valueOf(next.charAt(0) + "" + next.charAt(1)) <= 26){
-                two = rec(next.substring(2,next.length()),index+2,myMap,dp);
+        if(index + 1 < next.length()){
+            if(Integer.valueOf(next.substring(index, index + 1)) != 0 && Integer.valueOf(next.charAt(index) + "" + next.charAt(index + 1)) <= 26){
+                two = rec(next,index+2,dp);
             }
         }
-        dp.put(next,one + two);
-        return (one + two);
+        return dp[index] = one + two;
     }
 }
