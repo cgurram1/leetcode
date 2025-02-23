@@ -1,20 +1,24 @@
 class Solution:
     def totalFruit(self, fruits: List[int]) -> int:
-        mySet = {}
-        r = 0
         l = 0
-        res = float('-inf')
+        r = 0 
+        res = 0
+        myDict = {}
+        count = 0
         while(r < len(fruits)):
-            if fruits[r] in mySet:
-                mySet[fruits[r]] += 1
+            count+=1
+            if fruits[r] in myDict:
+                myDict[fruits[r]]+=1
             else:
-                mySet[fruits[r]] = 1
-            if len(mySet) > 2:
-                if mySet[fruits[l]] == 1:
-                    del mySet[fruits[l]]
+                myDict[fruits[r]] = 1
+            if len(myDict) > 2:
+                count-=1
+                if myDict[fruits[l]] == 1:
+                    del myDict[fruits[l]]
                 else:
-                    mySet[fruits[l]]-=1
+                    myDict[fruits[l]]-=1
                 l+=1
-            res = max(res,r-l+1)
+            if len(myDict) <= 2:
+                res = max(res,count)
             r+=1
         return res
