@@ -1,29 +1,30 @@
 class Solution:
     def minRemoveToMakeValid(self, s: str) -> str:
-        openCount = 0
-        toRemove = []
-        for i in range(len(s)):
-            if s[i] == ')':
-                if openCount == 0:
-                    toRemove.append(i)
-                else:
-                    openCount-=1
-            elif s[i] == '(':
-                openCount+=1
-        openCount = 0
-        for i in range(len(s)-1,-1,-1):
-            if s[i] == '(':
-                if openCount == 0:
-                    toRemove.append(i)
-                else:
-                    openCount-=1
-            elif s[i] == ')':
-                openCount+=1
-        res = ""
-        for i in range(len(s)):
-            if i not in toRemove:
-                res+=s[i]
+        parCount = 0
+        stack = []
+        for ch in s:
+            if ch == '(':
+                parCount+=1
+                stack.append(ch)
+            elif ch == ')':
+                if parCount > 0:
+                    res = ")"
+                    while(stack[-1] != '('):
+                        res = stack[-1] + res
+                        stack.pop(-1)
+                    res = '(' + res
+                    parCount-=1
+                    stack.pop(-1)
+                    stack.append(res)
+            else:
+                stack.append(ch)
+        res = "".join(stack)
+        i = len(res)-1
+        while(parCount > 0):
+            if res[i] == '(':
+                res = res[:i] + res[i+1:]
+                parCount-=1
+            i-=1
         return res
-
-
-
+                    
+            
