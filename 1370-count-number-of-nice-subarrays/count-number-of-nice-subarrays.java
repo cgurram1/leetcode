@@ -17,9 +17,7 @@ class Solution {
                 }
                 l+=1;
             }
-            if(oddCount <= goal){
-                res = res + (r - l + 1);
-            }
+            res = res + (r - l + 1);
             r+=1;
         }
         return res;   
