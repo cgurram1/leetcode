@@ -8,7 +8,6 @@ class Solution:
         for ch in s:
             dummy_str+=(ch + "*")
         dummy_str = dummy_str[:-1]
-        print(dummy_str)
         for i in range(len(dummy_str)):
             l = i
             r = i
