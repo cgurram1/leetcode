@@ -1,12 +1,9 @@
 class Solution:
     def firstUniqChar(self, s: str) -> int:
-        m = {}
+        arr = [0 for _ in range(26)]
         for ch in s:
-            if ch in m:
-                m[ch]+=1
-            else:
-                m[ch] = 1
+            arr[ord(ch) - ord('a')]+=1
         for i,ch in enumerate(s):
-            if m[ch] == 1:
+            if arr[ord(ch) - ord('a')] == 1:
                 return i
         return -1
