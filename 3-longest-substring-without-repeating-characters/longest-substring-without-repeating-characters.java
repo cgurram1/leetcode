@@ -11,17 +11,19 @@ class Solution {
             else{
                 map.put(s.charAt(r),1);
             }
-            while (map.get(s.charAt(r)) > 1){
+            if(map.size() != r-l+1){
                 if(map.get(s.charAt(l)) == 1){
                     map.remove(s.charAt(l));
                 }
                 else{
                     map.put(s.charAt(l), map.get(s.charAt(l))-1);
                 }
-                l+=1;
+                l++;
             }
-            res = Math.max(res,r-l+1);
-            r+=1;
+            if(map.size() == r-l+1){
+                res = Math.max(res,r-l+1);
+            }
+            r++;
         }
         return res;
     }
