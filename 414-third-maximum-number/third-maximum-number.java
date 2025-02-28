@@ -1,20 +1,26 @@
 class Solution {
     public int thirdMax(int[] nums) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>();
-        Set<Integer> set = new HashSet<>();
+        long max1 = Long.MIN_VALUE;
+        long max2 = Long.MIN_VALUE;
+        long max3 = Long.MIN_VALUE;
         for(int i = 0;i<nums.length;i++){
-            set.add(nums[i]);
-        }
-        for(int item : set){
-            pq.add(item);
-            if(pq.size() > 3){
-                pq.poll();
+            if(nums[i] > max3){
+                max1 = max2;
+                max2 = max3;
+                max3 = nums[i];
+            }
+            else if(nums[i] > max2 && nums[i] < max3){
+                max1 = max2;
+                max2 = nums[i];
+            }
+            else if(nums[i] > max1 && nums[i] < max2){
+                max1 = nums[i];
             }
         }
-        if(pq.size() >= 3 || pq.size() == 1){
-            return pq.peek();
+        if(max1 != Long.MIN_VALUE){
+            return (int)max1;
         }
-        pq.poll();
-        return pq.peek();
+        return (int)max3;
+
     }
 }
