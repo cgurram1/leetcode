@@ -5,7 +5,7 @@ class Solution {
         while(l < s.length()){
             res.append(s.charAt(l));
             if(res.length() >= part.length() && res.toString().substring(res.length()-part.length(),res.length()).equals(part)){
-                res = new StringBuilder(res.toString().substring(0,res.length()-part.length()));
+                res.delete(res.length()-part.length(),res.length());
             }
             l++;
         }
