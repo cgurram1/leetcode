@@ -1,31 +1,26 @@
+import java.util.*;
+
 class Solution {
     public int jump(int[] nums) {
-        int [] mins = new int[nums.length];
-        if(nums.length == 1){
-            return 0;
-        }
-        if(nums.length == 2){
-            return 1;
-        }
-        Arrays.fill(mins,0);
-        for(int i = nums.length-2;i>=0;i--){
-            if(nums[i]== 0){
-                mins[i] = Integer.MAX_VALUE;
+        int n = nums.length;
+        int[] mins = new int[n];
+        Arrays.fill(mins, Integer.MAX_VALUE); // Initialize with max value
+        mins[n - 1] = 0; // Last position needs 0 jumps to reach itself
+
+        for (int i = n - 2; i >= 0; i--) {
+            if (nums[i] == 0) continue; // Skip if no jump possible
+            
+            int minJump = Integer.MAX_VALUE;
+            int maxJump = Math.min(i + nums[i], n - 1); // Avoid going out of bounds
+            
+            for (int j = i + 1; j <= maxJump; j++) {
+                if (mins[j] != Integer.MAX_VALUE) { // Only check reachable positions
+                    minJump = Math.min(minJump, mins[j]);
+                }
             }
-            else{
-                int currMin = Integer.MAX_VALUE;
-                for(int j = i+1;j<=i+nums[i];j++){
-                    if(j < nums.length){
-                        currMin = Math.min(currMin, mins[j]);
-                    }
-                }
-                if(currMin == Integer.MAX_VALUE){
-                    mins[i] = currMin;
-                }
-                else{
-                    mins[i] = currMin + 1;
-                }
-                
+
+            if (minJump != Integer.MAX_VALUE) {
+                mins[i] = minJump + 1;
             }
         }
         return mins[0];
