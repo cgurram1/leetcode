@@ -9,32 +9,27 @@
  */
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        List<TreeNode> listP = new ArrayList<>();
-        List<TreeNode> listQ = new ArrayList<>();
-        rec(root,p,listP);
-        rec(root,q,listQ);
-        int minLen = Math.min(listP.size(), listQ.size());
-        int i = 0;
-        TreeNode res = null;
-        while(i < minLen && listP.get(i).val == listQ.get(i).val){
-            res = listP.get(i);
-            i++;
-        }
-        return res;
+        return rec(root,p,q);
     }
-    public boolean rec(TreeNode curr, TreeNode p, List<TreeNode> listP){
+    public TreeNode rec(TreeNode curr, TreeNode p, TreeNode q){
         if(curr == null){
-            return false;
+            return null;
         }
-        if(curr.val == p.val){
-            listP.add(curr);
-            return true;
+        if(curr == p || curr == q){
+            return curr;
         }
-        listP.add(curr);
-        if( rec(curr.left,p,listP) || rec(curr.right,p,listP)){
-            return true;
+        TreeNode left = rec(curr.left,p,q);
+        TreeNode right = rec(curr.right,p,q);
+        if(left != null && right != null){
+            return curr;
         }
-        listP.remove(listP.size()-1);
-        return false;
+        else if(left!= null){
+            return left;
+        }
+        else if(right != null){
+            return right;
+        }
+        return null;
+        
     }
 }
