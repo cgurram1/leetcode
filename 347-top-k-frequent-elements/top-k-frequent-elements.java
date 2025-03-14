@@ -1,30 +1,36 @@
-import java.util.*;
-
 class Solution {
     public int[] topKFrequent(int[] nums, int k) {
-        // Step 1: Count frequencies
-        Map<Integer, Integer> freqMap = new HashMap<>();
-        for (int num : nums) {
-            freqMap.put(num, freqMap.getOrDefault(num, 0) + 1);
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int i : nums){
+            map.put(i,map.getOrDefault(i,0) + 1);
         }
-
-        // Step 2: Use Min-Heap (size k) to keep only the k most frequent elements
-        PriorityQueue<Map.Entry<Integer, Integer>> pq = 
-            new PriorityQueue<>(Comparator.comparingInt(entry -> entry.getValue()));
-
-        for (Map.Entry<Integer, Integer> entry : freqMap.entrySet()) {
-            pq.add(entry);
-            if (pq.size() > k) {
-                pq.poll(); // Remove least frequent element
+        PriorityQueue<Pair> pq = new PriorityQueue<>();
+        for(Map.Entry<Integer,Integer> item : map.entrySet()){
+            int num = item.getKey();
+            int freq = item.getValue();
+            pq.add(new Pair(num,freq));
+            if(pq.size() > k){
+                pq.poll();
             }
         }
-
-        // Step 3: Extract results from heap
-        int[] result = new int[k];
-        for (int i = k - 1; i >= 0; i--) {
-            result[i] = pq.poll().getKey();
+        int [] result = new int[k];
+        int i = 0;
+        for(Pair p : pq){
+            result[i] = p.num;
+            i++;
         }
-
         return result;
+    }
+}
+class Pair implements Comparable<Pair>
+{
+    int num;
+    int freq;
+    public Pair(int num, int freq){
+        this.num = num;
+        this.freq = freq;
+    }
+    public int compareTo(Pair other){
+        return this.freq - other.freq;
     }
 }
