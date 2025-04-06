@@ -1,12 +1,10 @@
 func containsDuplicate(nums []int) bool {
-    var myMap map[int]bool = make(map[int]bool)
-    for _,val := range nums {
-        _, ok := myMap[val]
-        if ok == false{
-            myMap[val] = true
-        } else {
+    myMap := make(map[int]bool)
+    for _, val := range nums {
+        if myMap[val] {
             return true
         }
+        myMap[val] = true
     }
     return false
 }
