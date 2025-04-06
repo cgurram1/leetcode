@@ -1,14 +1,18 @@
-func isAnagram(s, t string) bool {
-    if len(s) != len(t) {
+func isAnagram(s string, t string) bool {
+
+    sMap := make(map[rune]int)
+    tMap := make(map[rune]int)
+    for _,char := range s{
+        sMap[char]+=1
+    }
+    for _,char := range t{
+        tMap[char]+=1
+    }
+    if len(sMap) != len(tMap){
         return false
     }
-    freq := make(map[rune]int)
-    for _, ch := range s {
-        freq[ch]++
-    }
-    for _, ch := range t {
-        freq[ch]--
-        if freq[ch] < 0 {
+    for key,val := range sMap{
+        if tMap[key] != val{
             return false
         }
     }
