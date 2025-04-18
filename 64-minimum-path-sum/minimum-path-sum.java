@@ -1,30 +1,24 @@
-import java.util.Arrays;
-
 class Solution {
     public int minPathSum(int[][] grid) {
-        int rows = grid.length;
-        int cols = grid[0].length;
-        int[][] dp = new int[rows][cols];
-        for (int[] row : dp) {
-            Arrays.fill(row, -1);
+        int [][] dp = new int[grid.length+1][grid[0].length];
+        for(int [] arr : dp){
+            Arrays.fill(arr,-1);
         }
-        return rec(0, 0, grid, dp);
+        return fun(0,0,grid,dp);
     }
-
-    private int rec(int i, int j, int[][] grid, int[][] dp) {
-        int rows = grid.length;
-        int cols = grid[0].length;
-        if (i == rows - 1 && j == cols - 1) {
-            return grid[i][j];
-        }
-        if (i >= rows || j >= cols) {
+    public int fun(int i,int j,int [][] grid, int [][] dp){
+        if(i == grid.length || j == grid[0].length){
             return Integer.MAX_VALUE;
         }
-        if (dp[i][j] != -1) {
+        if(i == grid.length-1 && j == grid[0].length-1){
+            return grid[i][j];
+        }
+        if(dp[i][j] != -1){
             return dp[i][j];
         }
-        int right = rec(i, j + 1, grid, dp);
-        int down = rec(i + 1, j, grid, dp);
-        return dp[i][j] = grid[i][j] + Math.min(right, down);
+        int down = fun(i+1,j,grid,dp);
+        int right = fun(i,j+1,grid,dp);
+        dp[i][j] = Math.min(down,right) + grid[i][j];
+        return dp[i][j];
     }
 }
