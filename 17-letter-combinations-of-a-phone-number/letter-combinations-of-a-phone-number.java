@@ -17,16 +17,15 @@ class Solution {
         rec(0,phone,curr,result,digits);
         return result;
     }
-    public static List<String> rec(int index, Map<Character,char []> phone , StringBuilder curr, List<String> result,String digits){
+    public void rec(int index, Map<Character, char[]> phone,StringBuilder curr, List<String> result, String digits){
         if(index == digits.length()){
-            result.add(curr.toString());
-            return result;
+            result.add(new StringBuilder(curr).toString());
+            return;
         }
-        for(int i = 0;i<phone.get(digits.charAt(index)).length;i++){
-            curr.append(phone.get(digits.charAt(index))[i]);
-            result = rec(index + 1,phone, curr, result,digits);
-            curr.deleteCharAt(curr.length()-1);
+        for(char next : phone.get(digits.charAt(index))){
+            curr.append(next);
+            rec(index+1,phone,curr, result, digits);
+            curr.deleteCharAt(curr.length() - 1);
         }
-        return result;
     }
 }
