@@ -1,33 +1,23 @@
-
 class Solution {
+    int res = Integer.MAX_VALUE;
+    int closest = 0;
+    int target;
     public int closestCost(int[] baseCosts, int[] toppingCosts, int target) {
-        Set<Integer> possibleToppings = new HashSet<>();
-        fun(0,toppingCosts,0,possibleToppings);
-        int res = Integer.MAX_VALUE;
-        int diff = 0;
-        int answer = 0;
-        for(int i = 0;i<baseCosts.length;i++){
-            for(int possibleCost : possibleToppings){
-                int dessertCost = possibleCost + baseCosts[i];
-                diff = Math.abs(target - dessertCost);
-                if(diff < res){
-                    answer = dessertCost;
-                    res = diff;
-                }
-                else if(diff == res){
-                    answer = Math.min(answer,dessertCost);
-                }
-            }
+        this.target = target;
+        for (int base : baseCosts) {
+            dfs(toppingCosts, 0, base);
         }
-        return answer;
+        return closest;
     }
-    public void fun(int index, int[] toppingCosts, int cost, Set<Integer> possibleToppings) {
-        if (index == toppingCosts.length) {
-            possibleToppings.add(cost);
-            return;
+    private void dfs(int[] toppingCosts, int index, int currentCost) {
+        int diff = Math.abs(currentCost - target);
+        if (diff < res || (diff == res && currentCost < closest)) {
+            res = diff;
+            closest = currentCost;
         }
-        fun(index + 1, toppingCosts, cost, possibleToppings);
-        fun(index + 1, toppingCosts, cost + toppingCosts[index], possibleToppings);
-        fun(index + 1, toppingCosts, cost + 2 * toppingCosts[index], possibleToppings);
+        if (index >= toppingCosts.length) return;
+        dfs(toppingCosts, index + 1, currentCost);
+        dfs(toppingCosts, index + 1, currentCost + toppingCosts[index]);
+        dfs(toppingCosts, index + 1, currentCost + 2 * toppingCosts[index]);
     }
 }
