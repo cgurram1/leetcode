@@ -34,11 +34,12 @@ class Trie {
     
     public boolean startsWith(String prefix) {
         Trie curr = this;
-        for(int i = 0; i<prefix.length();i++){
-            if(curr.arr[(int)prefix.charAt(i) - (int)'a'] == null){
+        for (int i = 0; i < prefix.length(); i++) {
+            int idx = prefix.charAt(i) - 'a';
+            if (curr.arr[idx] == null) {
                 return false;
             }
-            curr = curr.arr[(int)prefix.charAt(i) - (int)'a'];
+            curr = curr.arr[idx];
         }
         return true;
     }
