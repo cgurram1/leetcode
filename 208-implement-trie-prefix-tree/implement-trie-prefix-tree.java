@@ -4,7 +4,6 @@ class Trie {
 
     public Trie() {
         this.arr = new Trie[26];
-        Arrays.fill(this.arr,null);
         this.flag = false;
     }
     
