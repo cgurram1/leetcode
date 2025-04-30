@@ -1,42 +1,27 @@
 class Solution {
+    int [] x = new int[]{1,-1,0,0};
+    int [] y = new int[]{0,0,-1,1};
     public int numIslands(char[][] grid) {
-        int [] X = new int[]{1,-1,0,0};
-        int [] Y = new int[]{0,0,1,-1};
         boolean [][] visited = new boolean[grid.length][grid[0].length];
-        Queue<Pair> queue = new LinkedList<>();
-        int count = 0;
+        int noOfIslands = 0;
         for(int i = 0;i<grid.length;i++){
-            for(int j = 0;j<grid[i].length;j++){
+            for(int j = 0; j< grid[i].length;j++){
                 if(grid[i][j] == '1' && visited[i][j] == false){
-                    queue.add(new Pair(i,j));
-                    bfs(grid,visited,queue,X,Y);
-                    count+=1;
+                    noOfIslands+=1;
+                    traverse(i,j,grid,visited);
                 }
             }
         }
-        return count;
+        return noOfIslands;
     }
-    public void bfs(char[][] grid,boolean [][] visited, Queue<Pair> queue, int [] X, int [] Y){
-        while(queue.isEmpty() == false){
-            Pair popped = queue.poll();
-            int x = popped.x;
-            int y = popped.y;
-            for(int i = 0;i<4;i++){
-                int nextx = x + X[i];
-                int nexty = y + Y[i];
-                if(nextx >= 0 && nextx < grid.length && nexty >= 0 && nexty < grid[0].length && visited[nextx][nexty] == false && grid[nextx][nexty] == '1'){
-                    queue.add(new Pair(nextx,nexty));
-                    visited[nextx][nexty] = true;
-                }
+    public void traverse(int i, int j, char [][] grid, boolean [][] visited){
+        visited[i][j] = true;
+        for(int k = 0;k<4;k++){
+            int iNext = i + x[k];
+            int jNext = j + y[k];
+            if(iNext >= 0 && iNext < grid.length && jNext >= 0 && jNext < grid[0].length && grid[iNext][jNext] == '1' && visited[iNext][jNext] == false){
+                traverse(iNext, jNext, grid,visited);
             }
         }
     }
-}
-class Pair{
-    int x;
-    int y;
-    public Pair(int x, int y){
-        this.x = x;
-        this.y = y;
-    }   
 }
