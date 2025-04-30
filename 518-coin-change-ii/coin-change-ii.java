@@ -1,27 +1,28 @@
 class Solution {
     public int change(int amount, int[] coins) {
-        int [][] dp = new int[coins.length][5001];
-        for(int [] row : dp){
-            Arrays.fill(row,-1);
+        int [][] dp = new int[coins.length+1][amount+1];
+        for(int [] arr : dp){
+            Arrays.fill(arr,-1);
         }
-        return rec(0,amount,coins,dp);
+        return fun(0,0,amount, coins,dp);
     }
-    public static int rec(int index,int amountRemaining, int [] coins,int [][] dp){
-        if(amountRemaining == 0){
-            return 1;
-        }
+    public int fun(int index, int cost, int amount, int [] coins,int [][] dp){
         if(index == coins.length){
             return 0;
         }
-        if(dp[index][amountRemaining] != -1){
-            return dp[index][amountRemaining];
+        if(cost == amount){
+            return 1;
         }
-        int take = 0;
-        if(amountRemaining >= coins[index]){
-            take = rec(index, amountRemaining - coins[index],coins,dp);
+        if(dp[index][cost] != -1){
+            return dp[index][cost];
         }
-        int notTake = rec(index + 1, amountRemaining,coins,dp);
-        dp[index][amountRemaining] = take + notTake;
-        return dp[index][amountRemaining];
+        int pick = 0;
+        if(cost + coins[index] <= amount){
+            pick = fun(index, cost + coins[index], amount, coins,dp);
+        }
+        int notPick = fun(index + 1, cost,amount, coins,dp);
+        dp[index][cost] = pick + notPick;
+        return dp[index][cost];
     }
+
 }
