@@ -16,12 +16,12 @@ class Solution {
             int start = map.firstKey();
             for(int i = 0;i<groupSize;i++){
                 int toAdd = start + i;
-                if(map.containsKey(toAdd) == false){
-                    return false;
-                }
-                map.put(toAdd, map.get(toAdd) - 1);
-                if(map.get(toAdd) == 0){
+                Integer count = map.get(toAdd);
+                if (count == null) return false;
+                if (count == 1) {
                     map.remove(toAdd);
+                } else {
+                    map.put(toAdd, count - 1);
                 }
             }   
         }
