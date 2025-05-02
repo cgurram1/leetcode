@@ -2,7 +2,7 @@ class Solution {
     int [] xNext = new int[]{1,-1,0,0};
     int [] yNext = new int[]{0,0,1,-1};
     public int maxAreaOfIsland(int[][] grid) {
-        int result = Integer.MIN_VALUE;
+        int result = 0;
         for(int i = 0;i<grid.length;i++){
             for(int j = 0;j<grid[0].length;j++){
                 if(grid[i][j] == 1){
@@ -10,9 +10,6 @@ class Solution {
                     System.out.println(result);
                 }
             }   
-        }
-        if(result == Integer.MIN_VALUE){
-            return 0;
         }
         return result;
     }
