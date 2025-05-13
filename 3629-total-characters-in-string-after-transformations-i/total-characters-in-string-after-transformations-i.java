@@ -6,7 +6,6 @@ class Solution {
         for (int i = 0; i < s.length(); i++) {
             freq[s.charAt(i) - 'a']++;
         }
-
         for (int k = 0; k < t; k++) {
             int[] newFreq = new int[26];
             for (int i = 0; i < 26; i++) {
