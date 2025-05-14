@@ -1,6 +1,5 @@
 class Solution {
     public int[][] allCellsDistOrder(int rows, int cols, int rCenter, int cCenter) {
-        // List<int []> result = new ArrayList<>();
         int [][] result = new int[rows*cols][2];
         int index = 0;
         int [][] visited = new int[rows][cols];
@@ -10,7 +9,7 @@ class Solution {
         queue.add(new int[]{rCenter,cCenter});
         visited[rCenter][cCenter] = 1;
         while(!queue.isEmpty()){
-            int [] curr = queue.poll().clone();
+            int [] curr = queue.poll();
             result[index] = curr;
             index = index + 1;
             for(int i = 0;i<4;i++){
