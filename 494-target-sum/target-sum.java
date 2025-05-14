@@ -1,17 +1,28 @@
 class Solution {
-    public int result = 0;
-    public int findTargetSumWays(int[] nums, int target) {
-        fun(0,0,nums,target);
-        return this.result;
+    public int findTargetSumWays(int[] nums, int target){
+        int mathSum = 0;
+        for(int i = 0;i<nums.length;i++){
+            mathSum += nums[i];
+        }
+        int [][] dp = new int[nums.length + 1][mathSum * 2 + 1];
+        for(int [] arr : dp){
+            Arrays.fill(arr,-1);
+        }
+        return fun(0,0,nums,target,dp,mathSum);
     }
-    public void fun(int index,int sum,int [] nums,int target){
+    public int fun(int index, int sum, int [] nums,int target, int [][] dp,int mathSum){
         if(index == nums.length){
             if(sum == target){
-                result+=1;
+                return 1;
             }
-            return;
+            else{
+                return 0;
+            }
         }
-        fun(index + 1,sum + nums[index],nums,target);
-        fun(index + 1,sum - nums[index],nums,target);
+        if(dp[index][sum + mathSum] != -1){
+            return dp[index][sum + mathSum];
+        }
+        dp[index][sum + mathSum] = fun(index + 1, sum + nums[index],nums,target,dp,mathSum) + fun(index + 1, sum - nums[index],nums,target,dp,mathSum);
+        return dp[index][sum + mathSum];
     }
 }
