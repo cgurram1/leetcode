@@ -4,13 +4,13 @@ class Solution {
 
 
     public boolean hasAllCodes(String s, int k) {
-        Set<Integer> set = new HashSet<>();
+        Set<String> set = new HashSet<>();
         // StringBuilder st = new StringBuilder();
         // for(int i = 0;i<k;i++){
         //     st.append("0");
         // }
         for(int i = 0;i<=s.length()-k;i++){
-            set.add(Integer.parseInt(s.substring(i,i+k),2));
+            set.add(s.substring(i,i+k));
         }
         return set.size() == Math.pow(2,k);
     }
