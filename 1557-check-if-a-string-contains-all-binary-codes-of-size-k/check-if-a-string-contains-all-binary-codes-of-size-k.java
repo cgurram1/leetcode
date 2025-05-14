@@ -1,14 +1,18 @@
 class Solution {
+    // BruteForce
+    //Generate all k length binary strings anc check if it exists in the set
+
+
     public boolean hasAllCodes(String s, int k) {
-        Set<String> set = new HashSet<>();
-        StringBuilder st = new StringBuilder();
-        for(int i = 0;i<k;i++){
-            st.append("0");
-        }
+        Set<Integer> set = new HashSet<>();
+        // StringBuilder st = new StringBuilder();
+        // for(int i = 0;i<k;i++){
+        //     st.append("0");
+        // }
         for(int i = 0;i<=s.length()-k;i++){
-            set.add(s.substring(i,i+k));
+            set.add(Integer.parseInt(s.substring(i,i+k),2));
         }
-        return fun(0,st,set);
+        return set.size() == Math.pow(2,k);
     }
     public boolean fun(int index,StringBuilder st,Set<String> set){
         if(index == st.length()){
