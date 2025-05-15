@@ -9,7 +9,7 @@ class Solution {
         for(int i = 0;i<board.length;i++){
             for(int j = 0;j<board[i].length;j++){
                 if(board[i][j] == word.charAt(0)){
-                    if(fun(i,j,word,board,visited,new StringBuilder()) == true){
+                    if(fun(i,j,word,board,visited,1) == true){
                         return true;
                     }
                 }
@@ -17,28 +17,25 @@ class Solution {
         }
         return false;
     }
-    public boolean fun(int i,int j,String word,char [][] board,int [][] visited,StringBuilder curr){
+    public boolean fun(int i,int j,String word,char [][] board,int [][] visited,int index){
         visited[i][j] = 1;
-        curr.append(board[i][j]);
-        if(curr.length() > word.length()){
+        if(index > word.length()){
             visited[i][j] = -1;
-            curr.deleteCharAt(curr.length() - 1);
             return false;
         }
-        if(word.equals(curr.toString())){
+        if(index == word.length()){
             return true;
         }
         for(int k = 0;k<4;k++){
             int nexti = i + x[k];
             int nextj = j + y[k];
-            if(nexti >= 0 && nexti < board.length && nextj >= 0 && nextj < board[0].length && visited[nexti][nextj] == -1){
-                if(fun(nexti,nextj,word,board,visited,curr)){
+            if(nexti >= 0 && nexti < board.length && nextj >= 0 && nextj < board[0].length && visited[nexti][nextj] == -1 && board[nexti][nextj] == word.charAt(index)){
+                if(fun(nexti,nextj,word,board,visited,index + 1)){
                     return true;
                 }
             }
         }
         visited[i][j] = -1;
-        curr.deleteCharAt(curr.length()-1);
         return false;
     }
 }
