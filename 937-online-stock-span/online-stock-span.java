@@ -1,26 +1,16 @@
+import java.util.*;
+
 class StockSpanner {
-    public List<Integer> spans;
+    private Deque<int[]> stack;
     public StockSpanner() {
-        this.spans = new ArrayList<>();
+        stack = new ArrayDeque<>();
     }
-    
     public int next(int price) {
-        int count = 1;
-        for(int i = this.spans.size()-1;i>=0;i--){
-            if(this.spans.get(i) <= price){
-                count+=1;
-            }
-            else{
-                break;
-            }
+        int span = 1;
+        while (!stack.isEmpty() && stack.peek()[0] <= price) {
+            span += stack.pop()[1];
         }
-        this.spans.add(price);
-        return count;
+        stack.push(new int[]{ price, span });
+        return span;
     }
 }
-
-/**
- * Your StockSpanner object will be instantiated and called as such:
- * StockSpanner obj = new StockSpanner();
- * int param_1 = obj.next(price);
- */
