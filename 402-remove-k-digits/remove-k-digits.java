@@ -13,17 +13,17 @@ class Solution {
             k--;
         }
         Object [] arr = stack.toArray();
-        String res = "";
+        StringBuilder res = new StringBuilder();
         for(int i = 0;i<stack.size();i++){
             // System.out.println(arr[i]);
-            if(res == "" && (Character)arr[i] == '0'){
+            if(res.length() == 0 && (Character)arr[i] == '0'){
                 continue;
             }
-            res = res + arr[i];
+            res = res.append(arr[i]);
         }
-        if(res == ""){
+        if(res.length() == 0){
             return "0";
         }
-        return res;
+        return res.toString();
     }
 }
