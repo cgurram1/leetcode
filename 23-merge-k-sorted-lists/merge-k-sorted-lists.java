@@ -10,14 +10,16 @@
  */
 class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
-        if (lists == null || lists.length == 0) 
-            return null;
-        ListNode head1 = lists[0];
-        for(int i = 1;i<lists.length;i++){
-            ListNode head2 = lists[i];
-            head1 = merge(head1,head2);
-        }
-        return head1;
+    if (lists == null || lists.length == 0) return null;
+    return mergeRange(lists, 0, lists.length - 1);
+}
+
+    private ListNode mergeRange(ListNode[] lists, int lo, int hi) {
+        if (lo == hi) return lists[lo];
+        int mid = lo + (hi - lo) / 2;
+        ListNode left  = mergeRange(lists, lo, mid);
+        ListNode right = mergeRange(lists, mid + 1, hi);
+        return merge(left, right);      // your O(n+m) merge helper
     }
     public ListNode merge(ListNode head1, ListNode head2) {
         if (head1 == null) return head2;
