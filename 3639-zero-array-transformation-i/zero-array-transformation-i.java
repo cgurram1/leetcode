@@ -5,10 +5,6 @@ class Solution {
         for(int i = 1;i<nums.length;i++){
             diff[i] = nums[i] - nums[i-1];
         }
-        for(int i = 0;i<diff.length;i++){
-            System.out.println(diff[i]);
-        }
-        System.out.println("--------");
         for(int i = 0;i<queries.length;i++){
             int left = queries[i][0];
             int right = queries[i][1];
@@ -23,9 +19,6 @@ class Solution {
             if(diff[i] > 0){
                 return false;
             }
-        }
-        for(int i = 0;i<diff.length;i++){
-            System.out.println(diff[i]);
         }
         return true;
     }
