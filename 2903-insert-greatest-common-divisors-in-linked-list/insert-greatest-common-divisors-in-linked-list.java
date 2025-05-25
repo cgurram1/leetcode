@@ -19,13 +19,12 @@ class Solution {
         }
         return head;
     }
-    public int GCD(int a, int b){
-        int right = Math.min(a,b);
-        for(int i = right;i>= 2;i--){
-            if(a % i == 0 && b % i == 0){
-                return i;
-            }
-        }
-        return 1;
+    public int GCD(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
     }
+    return a;
+}
 }
