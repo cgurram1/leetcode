@@ -18,12 +18,6 @@ class Solution {
                         else{
                             y+=1;
                         }
-                        // if(isObstacle(y+1,x,obstacles) == false){
-                        //     y+=1;
-                        // }
-                        // else{
-                        //     continue;
-                        // }
                     }
                 }
                 else if(dir == 1){
@@ -34,12 +28,6 @@ class Solution {
                         else{
                             x+=1;
                         }
-                        // if(isObstacle(y,x+1,obstacles) == false){
-                        //     x+=1;
-                        // }
-                        // else{
-                        //     continue;
-                        // }
                     }
                 }
                 else if(dir == 2){
@@ -50,12 +38,6 @@ class Solution {
                         else{
                             x-=1;
                         }
-                        // if(isObstacle(y,x-1,obstacles) == false){
-                        //     x-=1;
-                        // }
-                        // else{
-                        //     continue;
-                        // }
                     }
                 }
                 else{
@@ -66,12 +48,6 @@ class Solution {
                         else{
                             y-=1;
                         }
-                        // if(isObstacle(y-1,x,obstacles) == false){
-                        //     y-=1;
-                        // }
-                        // else{
-                        //     continue;
-                        // }
                     }
                 }
             }
@@ -112,13 +88,5 @@ class Solution {
             result = Math.max(result,x*x + y*y);
         }
         return result;
-    }
-    public boolean isObstacle(int y,int x,int[][] obstacles){
-        for(int i = 0;i<obstacles.length;i++){
-            if(obstacles[i][0] == x && obstacles[i][1] == y){
-                return true;
-            }
-        }
-        return false;
     }
 }
