@@ -3,27 +3,23 @@ class Solution {
         Arrays.sort(deck);
         int [] res = new int[deck.length];
         Arrays.fill(res,-1);
+        Queue<Integer> queue = new LinkedList<>();
+        for(int i = 0;i<deck.length;i++){
+            queue.add(i);
+        }
         int i = 0;
-        int j = 0;
+        int nextAvail;
         int canFill = 1;
-        while(i < deck.length){
-            if(res[j] == -1){
-                if(canFill == 1){
-                    res[j] = deck[i];
-                    i++;
-                    j++;
-                    canFill = 0;
-                }
-                else{
-                    canFill = 1;
-                    j++;
-                }
+        while(!queue.isEmpty()){
+            nextAvail = queue.poll();
+            if(canFill == 1){
+                res[nextAvail] = deck[i];
+                i++;
+                canFill = 0;
             }
             else{
-                j++;
-            }
-            if(j == deck.length){
-                j = 0;
+                queue.add(nextAvail);
+                canFill = 1;
             }
         }
         return res;
