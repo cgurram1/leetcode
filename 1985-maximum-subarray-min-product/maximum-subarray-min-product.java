@@ -24,7 +24,7 @@ class Solution {
             }
             stack.push(i);
         }
-        stack = new Stack<>();
+        stack.clear();
         for(int i = nums.length-1;i>=0;i--){
             while(!stack.isEmpty() && nums[stack.peek()] > nums[i]){
                 stack.pop();
@@ -48,11 +48,9 @@ class Solution {
         long max = 0;
         for(int i = 0;i<nums.length;i++){
             if(prevMin[i] == -1){
-                // System.out.println(nums[i] + " " + prefixSum[nextMin[i] - 1]);
                 max = Math.max(nums[i] * prefixSum[nextMin[i] - 1], max);
             }
             else{
-                // System.out.println(nums[i] + " " + prefixSum[nextMin[i] - 1] + " " + prefixSum[prevMin[i]]);
                 max = Math.max(nums[i] * (prefixSum[nextMin[i] - 1] - prefixSum[prevMin[i]]), max);
             }
         }
