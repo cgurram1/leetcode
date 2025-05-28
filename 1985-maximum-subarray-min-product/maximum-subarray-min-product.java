@@ -11,31 +11,31 @@ class Solution {
         // System.out.println();
         int [] prevMin = new int[nums.length];
         int [] nextMin = new int[nums.length];
-        Stack<Integer> stack = new Stack<>();
+        Deque<Integer> stack = new ArrayDeque<>();
         for(int i = 0;i<nums.length;i++){
-            while(!stack.isEmpty() && nums[stack.peek()] >= nums[i]){
-                stack.pop();
+            while(!stack.isEmpty() && nums[stack.peekLast()] >= nums[i]){
+                stack.removeLast();
             }
             if(stack.isEmpty()){
                 prevMin[i] = -1;
             }
             else{
-                prevMin[i] = stack.peek();
+                prevMin[i] = stack.peekLast();
             }
-            stack.push(i);
+            stack.addLast(i);
         }
         stack.clear();
         for(int i = nums.length-1;i>=0;i--){
-            while(!stack.isEmpty() && nums[stack.peek()] > nums[i]){
-                stack.pop();
+            while(!stack.isEmpty() && nums[stack.peekLast()] > nums[i]){
+                stack.removeLast();
             }
             if(stack.isEmpty()){
                 nextMin[i] = nums.length;
             }
             else{
-                nextMin[i] = stack.peek();
+                nextMin[i] = stack.peekLast();
             }
-            stack.push(i);
+            stack.addLast(i);
         }
         // for(int i = 0;i<nums.length;i++){
         //     System.out.print(prevMin[i] + " ");
