@@ -2,8 +2,8 @@ class Solution {
     public int candy(int[] ratings) {
         int n = ratings.length;
         int [] res = new int[n];
-        Arrays.fill(res,1);
-        int count = 0;
+        // Arrays.fill(res,1);
+        int count = n;
         for(int i = 1;i<n;i++){
             if(ratings[i] > ratings[i-1]){
                 res[i] = res[i-1] + 1;
