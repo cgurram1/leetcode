@@ -5,10 +5,7 @@ class Solution {
         int diff = 0;
         for(int i = 1;i<nums.length;i++){
             diff += nums[i] - nums[i-1];
-            if(diff <= k){
-                continue;
-            }
-            else{
+            if(diff > k){
                 res+=1;
                 diff = 0;
             }
