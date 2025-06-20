@@ -22,7 +22,6 @@ class Solution {
                 currentDist = L;
             } else {
                 currentDist = L - 2 * (minPairs - k);
-                // currentDist = base + 2 * k;
             }
             maxDist = Math.max(maxDist, currentDist);
         }
