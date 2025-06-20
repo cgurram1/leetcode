@@ -21,8 +21,8 @@ class Solution {
             if (k >= minPairs) {
                 currentDist = L;
             } else {
-                int base = L - 2 * minPairs;
-                currentDist = base + 2 * k;
+                currentDist = L - 2 * (minPairs - k);
+                // currentDist = base + 2 * k;
             }
             maxDist = Math.max(maxDist, currentDist);
         }
