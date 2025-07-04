@@ -7,8 +7,15 @@ class Solution {
                 freq[word.charAt(i) - 'a']+=1;
             }
             String key = Arrays.toString(freq);
-            List<String> temp = map.containsKey(key) ? map.get(key) : new ArrayList<>();
-            temp.add(word);
+            List<String> temp;
+            try{
+                temp = map.get(key);
+                temp.add(word);
+            }
+            catch(Exception e){
+                temp = new ArrayList<>();
+                temp.add(word);
+            }
             map.put(key,temp);
             Arrays.fill(freq,0);
         }
