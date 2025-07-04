@@ -1,22 +1,21 @@
 class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
-        Map<Map<Character,Integer>,ArrayList<String>> outerMap = new HashMap<>();
-        for(int i = 0;i<strs.length;i++){
-            Map<Character,Integer> innerMap = new HashMap<>();
-            for(int j = 0;j<strs[i].length();j++){
-                innerMap.put(strs[i].charAt(j), innerMap.getOrDefault(strs[i].charAt(j),0)+1);
+        Map<String, List<String>> map = new HashMap<>();
+        int [] freq = new int[26];
+        for(String word : strs){
+            for(int i = 0;i<word.length();i++){
+                freq[word.charAt(i) - 'a']+=1;
             }
-
-            ArrayList<String> anagramList = outerMap.getOrDefault(innerMap, new ArrayList<String>());
-            anagramList.add(strs[i]);
-            outerMap.put(innerMap, anagramList);
+            String key = Arrays.toString(freq);
+            List<String> temp = map.containsKey(key) ? map.get(key) : new ArrayList<>();
+            temp.add(word);
+            map.put(key,temp);
+            Arrays.fill(freq,0);
         }
-        System.out.println(outerMap);
         List<List<String>> res = new ArrayList<>();
-        for(Map.Entry<Map<Character,Integer>,ArrayList<String>> item : outerMap.entrySet()){
-            res.add(item.getValue());
+        for(Map.Entry<String,List<String>> entry : map.entrySet()){
+            res.add(entry.getValue());
         }
-        
         return res;
     }
 }
