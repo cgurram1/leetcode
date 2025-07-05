@@ -1,35 +1,31 @@
 class Solution {
     public int[][] kClosest(int[][] points, int k) {
         PriorityQueue<Pair> pq = new PriorityQueue<>(Collections.reverseOrder());
-        int [][] result = new int[k][2];
-        for(int i = 0;i<points.length;i++){
-            pq.add(new Pair(points[i][0],points[i][1]));
+        for(int [] point : points){
+            pq.add(new Pair(point));
             if(pq.size() > k){
-                pq.remove();
+                pq.poll();
             }
         }
+        int [][] res = new int[k][2];
         int i = 0;
         while(!pq.isEmpty()){
-            Pair p = pq.remove();
-            result[i][0] = p.x;
-            result[i][1] = p.y;
+            res[i] = pq.poll().coordinate;
             i++;
         }
-        return result;
+        return res;
     }
 }
-
 class Pair implements Comparable<Pair>{
-    int x;
-    int y;
-    double distanceFromOrigin;
+    int [] coordinate;
+    double dist;
+    public Pair(int [] point){
+        coordinate = point;
+        dist = Math.sqrt(point[0]*point[0] + point[1]*point[1]);
+    }
 
-    public Pair(int x, int y){
-        this.x = x;
-        this.y = y;
-        this.distanceFromOrigin = Math.sqrt(x*x + y*y);
-    }
     public int compareTo(Pair other){
-        return Double.compare(this.distanceFromOrigin,other.distanceFromOrigin);
+        return this.dist - other.dist > 0 ? 1:-1;
     }
+
 }
