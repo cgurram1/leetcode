@@ -1,15 +1,35 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        // BST property: left < root < right
-        while (root != null) {
-            if (p.val < root.val && q.val < root.val) {
-                root = root.left;  // Both nodes are in left subtree
-            } else if (p.val > root.val && q.val > root.val) {
-                root = root.right; // Both nodes are in right subtree
-            } else {
-                return root; // This is the split point → LCA
-            }
+        if(root == null){
+            return null;
         }
-        return null;
+        if(root == p || root == q){
+            return root;
+        }
+        TreeNode left = lowestCommonAncestor(root.left,p,q);
+        TreeNode right = lowestCommonAncestor(root.right,p,q);
+        if(left != null && right != null){
+            return root;
+        }
+        else if(left == null && right == null){
+            return null;
+        }
+        else{
+            if(left != null){
+                return left;
+            }
+            return right;
+        }
     }
+    
 }
