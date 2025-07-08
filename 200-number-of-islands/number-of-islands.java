@@ -1,26 +1,26 @@
 class Solution {
-    int [] x = new int[]{1,-1,0,0};
-    int [] y = new int[]{0,0,-1,1};
+    int [] xs = new int[]{1,-1,0,0};
+    int [] ys = new int[]{0,0,1,-1};
     public int numIslands(char[][] grid) {
         boolean [][] visited = new boolean[grid.length][grid[0].length];
-        int noOfIslands = 0;
+        int count = 0;
         for(int i = 0;i<grid.length;i++){
-            for(int j = 0; j< grid[i].length;j++){
+            for(int j = 0;j<grid[0].length;j++){
                 if(grid[i][j] == '1' && visited[i][j] == false){
-                    noOfIslands+=1;
-                    traverse(i,j,grid,visited);
+                    dfs(i,j,visited,grid);
+                    count+=1;
                 }
             }
         }
-        return noOfIslands;
+        return count;
     }
-    public void traverse(int i, int j, char [][] grid, boolean [][] visited){
-        visited[i][j] = true;
-        for(int k = 0;k<4;k++){
-            int iNext = i + x[k];
-            int jNext = j + y[k];
-            if(iNext >= 0 && iNext < grid.length && jNext >= 0 && jNext < grid[0].length && grid[iNext][jNext] == '1' && visited[iNext][jNext] == false){
-                traverse(iNext, jNext, grid,visited);
+    public void dfs(int x, int y, boolean [][] visited, char[][] grid){
+        visited[x][y] = true;
+        for(int i = 0;i<4;i++){
+            int nextX = x + xs[i];
+            int nextY = y + ys[i];
+            if(nextX >= 0 && nextY >= 0 && nextX < grid.length && nextY < grid[0].length && visited[nextX][nextY] == false && grid[nextX][nextY] == '1'){
+                dfs(nextX,nextY,visited,grid);
             }
         }
     }
