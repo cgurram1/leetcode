@@ -13,11 +13,12 @@ class Solution {
         }
         int one = 0;
         int two = 0;
-        if(Integer.valueOf(next.substring(index, index + 1)) > 0){
+        int check = Integer.valueOf(next.substring(index, index + 1));
+        if(check > 0){
             one = rec(next,index+1,dp);
         }
         if(index + 1 < next.length()){
-            if(Integer.valueOf(next.substring(index, index + 1)) != 0 && Integer.valueOf(next.charAt(index) + "" + next.charAt(index + 1)) <= 26){
+            if(check != 0 && Integer.valueOf(next.charAt(index) + "" + next.charAt(index + 1)) <= 26){
                 two = rec(next,index+2,dp);
             }
         }
