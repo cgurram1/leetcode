@@ -15,8 +15,9 @@ class Solution {
         HashMap<Long,Integer> map = new HashMap<>();
         int index = 0;
         boolean roundDone = false;
-        while(((numerator % denominator) != 0 && roundDone == true) || (numerator % denominator) != 0){
-            numerator = (numerator%denominator)*10;
+        long check = numerator%denominator;
+        while((check != 0 && roundDone == true) || check != 0){
+            numerator = check*10;
             int afterValue = (int)(numerator / denominator);
             if(afterValue > 0){
                 roundDone = true;
@@ -29,6 +30,7 @@ class Solution {
             after.append(afterValue+"");
             map.putIfAbsent(numerator,index);
             index+=1;
+            check = numerator%denominator;
         }
         if(after.length() == 0){
             if(isNegative == true && before != 0){
