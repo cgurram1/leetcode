@@ -1,41 +1,44 @@
 class Solution {
-    public String fractionToDecimal(int numerator, int denominator) {
-        if (numerator == 0) return "0";
-
-        StringBuilder result = new StringBuilder();
-
-        // Determine the sign
-        if ((numerator < 0) ^ (denominator < 0)) {
-            result.append("-");
+    public String fractionToDecimal(int num, int den) {
+        long numerator = num;
+        long denominator = den;
+        boolean isNegative = false;
+        if(numerator < 0 && denominator < 0){
         }
-
-        // Convert to positive long values to avoid overflow
-        long num = Math.abs((long) numerator);
-        long den = Math.abs((long) denominator);
-
-        // Append integral part
-        result.append(num / den);
-        long remainder = num % den;
-
-        if (remainder == 0) return result.toString();
-
-        result.append(".");
-        Map<Long, Integer> map = new HashMap<>();
-
-        // Track remainder positions for repeat detection
-        while (remainder != 0) {
-            if (map.containsKey(remainder)) {
-                result.insert(map.get(remainder), "(");
-                result.append(")");
+        else if(numerator < 0 || denominator < 0){
+            isNegative = true;
+            numerator = Math.abs(numerator);
+            denominator = Math.abs(denominator);
+        }
+        long before = (long)(numerator / denominator);
+        StringBuilder after = new StringBuilder();
+        HashMap<Long,Integer> map = new HashMap<>();
+        int index = 0;
+        boolean roundDone = false;
+        while(((numerator % denominator) != 0 && roundDone == true) || (numerator % denominator) != 0){
+            numerator = (numerator%denominator)*10;
+            int afterValue = (int)(numerator / denominator);
+            if(afterValue > 0){
+                roundDone = true;
+            }
+            if(map.containsKey(numerator) && roundDone == true){
+                after.insert(map.get(numerator),"(");
+                after.append(")");
                 break;
             }
-
-            map.put(remainder, result.length());
-            remainder *= 10;
-            result.append(remainder / den);
-            remainder %= den;
+            after.append(afterValue+"");
+            map.putIfAbsent(numerator,index);
+            index+=1;
         }
-
-        return result.toString();
+        if(after.length() == 0){
+            if(isNegative == true && before != 0){
+                return "-" + before;
+            }
+            return before + "";
+        }
+        if(isNegative == true){
+            return "-" + before + "." + after.toString();
+        }
+        return before + "." + after.toString();
     }
 }
