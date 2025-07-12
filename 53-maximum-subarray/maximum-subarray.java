@@ -1,16 +1,16 @@
 class Solution {
     public int maxSubArray(int[] nums) {
-        int result = Integer.MIN_VALUE;
-        int currSum = 0;
-        for(int i = 0;i<nums.length;i++){
-            if(nums[i] >= currSum + nums[i]){
-                currSum = nums[i];
+        int res = Integer.MIN_VALUE;
+        int sum = nums[0];
+        for(int i = 1;i<nums.length;i++){
+            res = Math.max(res,sum);
+            if(sum + nums[i] < nums[i]){
+                sum = nums[i];
             }
             else{
-                currSum += nums[i];
+                sum = sum + nums[i];
             }
-            result = Math.max(result, currSum);
-        }
-        return result;
+        } 
+        return Math.max(res,sum);
     }
 }
