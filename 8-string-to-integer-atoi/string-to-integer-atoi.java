@@ -17,20 +17,22 @@ class Solution {
             else if(s.charAt(i) >= '0' && s.charAt(i) <= '9'){
                 isFirstDigitFound = true;
                 num = num*10 + (s.charAt(i) - '0');
-                System.out.println(num);
+                if(num > Integer.MAX_VALUE){
+                    return isNegative == true ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+                }
             }
             else{
                 break;
             }
         }
-        if((int)num != num){
-            if(isNegative){
-                return Integer.MIN_VALUE;
-            }
-            else{
-                return Integer.MAX_VALUE;
-            }
-        }
+        // if((int)num != num){
+        //     if(isNegative){
+        //         return Integer.MIN_VALUE;
+        //     }
+        //     else{
+        //         return Integer.MAX_VALUE;
+        //     }
+        // }
         if(isNegative){
             return -(int)num;
         }
