@@ -10,14 +10,18 @@ class Solution {
         for(int i = nums.length - 1;i>=0;i--){
             int outLier = nums[i];
             int remainingSum = totalSum - outLier;
-            if(remainingSum % 2 != 0){
-                continue;
+            if(remainingSum % 2 == 0){
+                if(remainingSum/2 == outLier){
+                    if(map.get(outLier) > 1){
+                        res = Math.max(res,outLier);
+                    }
+                }
+                else{
+                    if(map.containsKey(remainingSum/2)){
+                        res = Math.max(res,outLier);
+                    }
+                }
             }
-            map.put(outLier, map.get(outLier)-1);
-            if(map.containsKey(remainingSum/2) && map.get(remainingSum/2) > 0){
-                res = Math.max(res,outLier);
-            }
-            map.put(outLier, map.get(outLier) + 1);
         }
         return res;
     }
