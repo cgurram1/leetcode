@@ -9,12 +9,11 @@ class Solution {
         Arrays.sort(nums);
         for(int i = nums.length - 1;i>=0;i--){
             int outLier = nums[i];
-            map.put(outLier, map.get(outLier)-1);
             int remainingSum = totalSum - outLier;
             if(remainingSum % 2 != 0){
-                map.put(outLier, map.get(outLier) + 1);
                 continue;
             }
+            map.put(outLier, map.get(outLier)-1);
             if(map.containsKey(remainingSum/2) && map.get(remainingSum/2) > 0){
                 return outLier;
             }
