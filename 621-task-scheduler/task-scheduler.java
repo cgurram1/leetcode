@@ -1,46 +1,55 @@
 class Solution {
     public int leastInterval(char[] tasks, int n) {
-        int [] freqs = new int[26];
-        PriorityQueue<Pair> pq = new PriorityQueue<>((a,b) -> {return b.freq - a.freq;});
-        for(int i = 0;i<tasks.length;i++){
-            freqs[tasks[i] - 'A']+=1;
+        int[] freqs = new int[26];
+        PriorityQueue<Pair> pq = new PriorityQueue<>((a, b) -> b.freq - a.freq);
+        
+        // Count frequencies
+        for (char task : tasks) {
+            freqs[task - 'A']++;
         }
-        List<Pair> list = new ArrayList<>();
-        for(int i = 0;i<26;i++){
-            if(freqs[i] > 0){
-                list.add(new Pair((char)(i + 'A'),freqs[i]));
+
+        // Add initial tasks to the priority queue
+        for (int i = 0; i < 26; i++) {
+            if (freqs[i] > 0) {
+                pq.add(new Pair((char)(i + 'A'), freqs[i]));
             }
         }
-        int curr;
+
         int res = 0;
-        while(list.size() > 0 || pq.size() > 0){
-            curr = n;
-            for(int i = 0;i<list.size();i++){
-                pq.add(list.get(i));
+        while (!pq.isEmpty()) {
+            List<Pair> temp = new ArrayList<>();
+            int cycle = n + 1;
+
+            // Try to schedule up to n + 1 tasks
+            while (cycle > 0 && !pq.isEmpty()) {
+                Pair p = pq.poll();
+                p.freq--;
+                if (p.freq > 0) {
+                    temp.add(p); // store for next round
+                }
+                res++;
+                cycle--;
             }
-            list.clear();
-            while(curr >= 0){
-                if(!pq.isEmpty()){
-                    Pair p = pq.poll();
-                    p.freq -=1;
-                    if(p.freq > 0){
-                        list.add(p);
-                    }
-                }
-                if(list.size() == 0 && pq.size() == 0){
-                    return res+1;
-                }
-                res+=1;
-                curr-=1;
+
+            // Re-add remaining tasks
+            for (Pair p : temp) {
+                pq.add(p);
+            }
+
+            // If there are still tasks left, we had idle time
+            if (!pq.isEmpty()) {
+                res += cycle;
             }
         }
+
         return res;
     }
 }
-class Pair{
+
+class Pair {
     char ch;
     int freq;
-    public Pair(char c, int f){
+    public Pair(char c, int f) {
         this.ch = c;
         this.freq = f;
     }
