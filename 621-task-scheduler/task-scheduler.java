@@ -5,7 +5,7 @@ class Solution {
         for(int i = 0;i<tasks.length;i++){
             freqs[tasks[i] - 'A']+=1;
         }
-        Queue<Pair> list = new LinkedList<>();
+        List<Pair> list = new ArrayList<>();
         for(int i = 0;i<26;i++){
             if(freqs[i] > 0){
                 list.add(new Pair((char)(i + 'A'),freqs[i]));
@@ -15,9 +15,10 @@ class Solution {
         int res = 0;
         while(list.size() > 0 || pq.size() > 0){
             curr = n;
-            while(!list.isEmpty()){
-                pq.add(list.poll());
+            for(int i = 0;i<list.size();i++){
+                pq.add(list.get(i));
             }
+            list.clear();
             while(curr >= 0){
                 if(!pq.isEmpty()){
                     Pair p = pq.poll();
