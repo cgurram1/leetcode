@@ -1,18 +1,19 @@
 class Solution {
+    List<List<Integer>> result = new ArrayList<>();
+    int [] numsG;
     public List<List<Integer>> subsets(int[] nums) {
-        List<List<Integer>> result = new ArrayList<>();
-        List<Integer> list = new ArrayList<>();
-        rec(0,result,list,nums);
+        numsG = nums;
+        fun(0,new ArrayList<>());
         return result;
     }
-    public void rec(int index, List<List<Integer>> result,List<Integer> list, int [] nums){
-        if(index == nums.length){
-            result.add(new ArrayList<>(list));
+    public void fun(int index,List<Integer> curr){
+        if(index == numsG.length){
+            result.add(new ArrayList<>(curr));
             return;
         }
-        list.add(nums[index]);
-        rec(index + 1, result, list,nums);
-        list.remove(list.size()-1);
-        rec(index + 1,result,list,nums);
+        curr.add(numsG[index]);
+        fun(index + 1, curr);
+        curr.remove(curr.size()-1);
+        fun(index + 1, curr);
     }
 }
