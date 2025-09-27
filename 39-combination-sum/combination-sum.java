@@ -1,24 +1,25 @@
 class Solution {
+    public List<List<Integer>> result;
     int [] candidatesG;
     int targetG;
-    List<List<Integer>> result = new ArrayList<>();
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        result = new ArrayList<>();
         candidatesG = candidates;
         targetG = target;
-        fun(0,0,new ArrayList<>());
+        fun(0,new ArrayList<>(),0);
         return result;
     }
-    public void fun(int index, int sum, List<Integer> curr){
+    public void fun(int index, List<Integer> curr,int sum){
         if(sum == targetG){
             result.add(new ArrayList<>(curr));
             return;
         }
-        if(index == candidatesG.length || sum > targetG){
+        if(sum > targetG || index == candidatesG.length){
             return;
         }
         curr.add(candidatesG[index]);
-        fun(index, sum + candidatesG[index],curr);
+        fun(index,curr,sum + candidatesG[index]);
         curr.remove(curr.size()-1);
-        fun(index + 1, sum,curr);
+        fun(index + 1, curr,sum);
     }
 }
