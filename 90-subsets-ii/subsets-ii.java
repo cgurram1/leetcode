@@ -1,21 +1,24 @@
 class Solution {
+    public List<List<Integer>> result;
+    public int[] numsG;
     public List<List<Integer>> subsetsWithDup(int[] nums) {
-        Arrays.sort(nums);
-        List<List<Integer>> result = new ArrayList<>();
-        fun(0,nums,new ArrayList<>(), result);
+        result = new ArrayList<>();
+        numsG = nums;
+        Arrays.sort(numsG);
+        fun(0,new ArrayList<>());
         return result;
     }
-    public void fun(int index, int [] nums, List<Integer> path, List<List<Integer>> result){
-        if(index == nums.length){
-            result.add(new ArrayList<>(path));
+    public void fun(int index, List<Integer> curr){
+        if(index >= numsG.length){
+            result.add(new ArrayList<>(curr));
             return;
         }
-        path.add(nums[index]);
-        fun(index + 1, nums,path,result);
-        path.remove(path.size()-1);
-        while(index + 1 < nums.length && nums[index + 1] == nums[index]){
-            index += 1;
+        curr.add(numsG[index]);
+        fun(index + 1, curr);
+        curr.remove(curr.size()-1);
+        while(index < numsG.length-1 && numsG[index] == numsG[index + 1]){
+            index++;
         }
-        fun(index + 1, nums, path, result);
+        fun(index + 1, curr);
     }
 }
