@@ -9,7 +9,7 @@ class Solution {
     }
     public void fun(int index, StringBuilder str){
         if(index == S.length()){
-            result.add(new String(str.toString()));
+            result.add(str.toString());
             return;
         }
         if(Character.isDigit(S.charAt(index))){
