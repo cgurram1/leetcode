@@ -1,24 +1,34 @@
 class LRUCache {
-    public int capacity;
-    public DoublyLinkedList tail;
-    public DoublyLinkedList head;
-    public Map<Integer, DoublyLinkedList> map;
-
+    public int capG;
+    public Map<Integer,Node> map;
+    public Node head;
+    public Node tail;
+    class Node{
+        int key;
+        int value;
+        Node next;
+        Node prev;
+        public Node(int k, int v){
+            this.key = k;
+            this.value = v;
+            this.next = null;
+            this.prev = null;
+        }
+    }
     public LRUCache(int capacity) {
-        this.capacity = capacity;
-        this.tail = new DoublyLinkedList(-1,-1);
-        this.head = new DoublyLinkedList(-1,-1);
-        tail.prev = head;
-        tail.next = null;
-        head.prev = null;
-        head.next = tail;
+        capG = capacity;
         map = new HashMap<>();
+        head = new Node(-1,-1);
+        tail = new Node(-1,-1);
+        head.next = tail;
+        tail.prev = head;
     }
     
     public int get(int key) {
         if(map.containsKey(key)){
-            this.removeNode(map.get(key));
-            this.addNode(map.get(key));
+            // update the LinkedList
+            deleteFromLinkedList(map.get(key));
+            addToLinkedList(map.get(key));
             return map.get(key).value;
         }
         else{
@@ -28,47 +38,45 @@ class LRUCache {
     
     public void put(int key, int value) {
         if(map.containsKey(key)){
-            this.removeNode(map.get(key));
-            this.addNode(map.get(key));
-            map.get(key).value = value;
-            map.put(key, map.get(key));
+            Node node = map.get(key);
+            node.value = value;
+            map.put(key,node);
+            // update the LinkedList
+            deleteFromLinkedList(node);
+            addToLinkedList(node);
         }
         else{
-            if(map.size() == capacity){
-                DoublyLinkedList nodeToRemove = tail.prev;
-                this.removeNode(nodeToRemove);
-                map.remove(nodeToRemove.key);
+            if(capG == 0){
+                deleteLeastRecentlyUsedNode();
+                capG+=1;
             }
-            DoublyLinkedList nodeToAdd = new DoublyLinkedList(key,value);
-            this.addNode(nodeToAdd);
-            map.put(key,nodeToAdd);
+            Node node = new Node(key,value);
+            map.put(key,node);
+            //update the LinkedList
+            addToLinkedList(node);
+            capG-=1;
         }
     }
-    public void removeNode(DoublyLinkedList curr){
-        DoublyLinkedList prev = curr.prev;
-        DoublyLinkedList next = curr.next;
-        prev.next = next;
-        next.prev = prev;
+    public void addToLinkedList(Node node){
+        Node nextNode = head.next;
+        head.next = node;
+        node.next = nextNode;
+        nextNode.prev = node;
+        node.prev = head;
     }
-    public void addNode(DoublyLinkedList curr){
-        DoublyLinkedList prev = head;
-        DoublyLinkedList next = head.next;
-        curr.next = next;
-        prev.next = curr;
-        next.prev = curr;
-        curr.prev = prev;
+    public void deleteFromLinkedList(Node node){
+        Node prevNode = node.prev;
+        Node nextNode = node.next;
+        prevNode.next = nextNode;
+        nextNode.prev = prevNode;
     }
-}
-class DoublyLinkedList{
-    public int key;
-    public int value;
-    public DoublyLinkedList next;
-    public DoublyLinkedList prev;
-    public DoublyLinkedList(int key, int value){
-        this.key = key;
-        this.value = value;
+    public void deleteLeastRecentlyUsedNode(){
+        Node nodeToDelete = tail.prev;
+        map.remove(nodeToDelete.key);
+        deleteFromLinkedList(nodeToDelete);
     }
 }
+
 /**
  * Your LRUCache object will be instantiated and called as such:
  * LRUCache obj = new LRUCache(capacity);
