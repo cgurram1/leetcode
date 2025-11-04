@@ -1,26 +1,31 @@
 class Solution {
-    int [] xs = new int[]{1,-1,0,0};
-    int [] ys = new int[]{0,0,1,-1};
+    public boolean visited [][];
+    public char gridG[][];
+    public int [] X = new int[]{1,-1,0,0};
+    public int [] Y = new int[]{0,0,1,-1};
     public int numIslands(char[][] grid) {
-        boolean [][] visited = new boolean[grid.length][grid[0].length];
+        visited = new boolean[grid.length][grid[0].length];
+        gridG = grid;
         int count = 0;
         for(int i = 0;i<grid.length;i++){
             for(int j = 0;j<grid[0].length;j++){
                 if(grid[i][j] == '1' && visited[i][j] == false){
-                    dfs(i,j,visited,grid);
                     count+=1;
+                    dfs(i,j);
                 }
             }
         }
         return count;
     }
-    public void dfs(int x, int y, boolean [][] visited, char[][] grid){
-        visited[x][y] = true;
-        for(int i = 0;i<4;i++){
-            int nextX = x + xs[i];
-            int nextY = y + ys[i];
-            if(nextX >= 0 && nextY >= 0 && nextX < grid.length && nextY < grid[0].length && visited[nextX][nextY] == false && grid[nextX][nextY] == '1'){
-                dfs(nextX,nextY,visited,grid);
+    public void dfs(int i,int j){
+        visited[i][j] = true;
+        for(int k = 0;k<4;k++){
+            int nexti = i + X[k];
+            int nextj = j + Y[k];
+            if(nexti < gridG.length && nextj < gridG[0].length && nexti >= 0 && nextj >= 0){
+                if(gridG[nexti][nextj] == '1' && visited[nexti][nextj] == false){
+                    dfs(nexti,nextj);
+                }
             }
         }
     }
