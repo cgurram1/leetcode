@@ -1,35 +1,33 @@
 class LRUCache {
-    public int capG;
-    public Map<Integer,Node> map;
+    public int capacityG;
+    public Map<Integer, Node> map = new HashMap<>();
     public Node head;
     public Node tail;
     class Node{
+        int val;
         int key;
-        int value;
         Node next;
         Node prev;
-        public Node(int k, int v){
-            this.key = k;
-            this.value = v;
+        public Node(){
             this.next = null;
             this.prev = null;
+            this.val = 0;
         }
     }
+
     public LRUCache(int capacity) {
-        capG = capacity;
-        map = new HashMap<>();
-        head = new Node(-1,-1);
-        tail = new Node(-1,-1);
+        this.capacityG = capacity;
+        head = new Node();
+        tail = new Node();
         head.next = tail;
         tail.prev = head;
     }
     
     public int get(int key) {
         if(map.containsKey(key)){
-            // update the LinkedList
-            deleteFromLinkedList(map.get(key));
-            addToLinkedList(map.get(key));
-            return map.get(key).value;
+            remove(map.get(key));
+            add(map.get(key));
+            return map.get(key).val;
         }
         else{
             return -1;
@@ -38,42 +36,37 @@ class LRUCache {
     
     public void put(int key, int value) {
         if(map.containsKey(key)){
-            Node node = map.get(key);
-            node.value = value;
-            map.put(key,node);
-            // update the LinkedList
-            deleteFromLinkedList(node);
-            addToLinkedList(node);
+            Node currNode = map.get(key);
+            currNode.val = value;
+            remove(map.get(key));
+            add(map.get(key));
         }
         else{
-            if(capG == 0){
-                deleteLeastRecentlyUsedNode();
-                capG+=1;
+            if(capacityG == 0){
+                map.remove(tail.prev.key);
+                remove(tail.prev);
+                capacityG+=1;
             }
-            Node node = new Node(key,value);
-            map.put(key,node);
-            //update the LinkedList
-            addToLinkedList(node);
-            capG-=1;
+            Node newNode = new Node();
+            newNode.val = value;
+            newNode.key = key;
+            map.put(key, newNode);
+            add(newNode);
+            capacityG-=1;
         }
     }
-    public void addToLinkedList(Node node){
-        Node nextNode = head.next;
+    public void add(Node node){
+        node.next = head.next;
+        head.next.prev = node;
         head.next = node;
-        node.next = nextNode;
-        nextNode.prev = node;
         node.prev = head;
     }
-    public void deleteFromLinkedList(Node node){
+    public void remove(Node node){
         Node prevNode = node.prev;
         Node nextNode = node.next;
         prevNode.next = nextNode;
         nextNode.prev = prevNode;
-    }
-    public void deleteLeastRecentlyUsedNode(){
-        Node nodeToDelete = tail.prev;
-        map.remove(nodeToDelete.key);
-        deleteFromLinkedList(nodeToDelete);
+
     }
 }
 
