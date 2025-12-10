@@ -1,28 +1,27 @@
 class Solution {
     public String removeKdigits(String num, int k) {
-        Stack<Character> stack = new Stack<>();
-        for(int i = 0;i<num.length();i++){
-            while(k > 0 && !stack.isEmpty() && stack.peek() > num.charAt(i)){
-                stack.pop();
-                k--;
-            }
-            stack.push(num.charAt(i));
-        }
-        while(k > 0 && !stack.isEmpty()){
-            stack.pop();
-            k--;
-        }
-        Object [] arr = stack.toArray();
-        StringBuilder res = new StringBuilder();
-        for(int i = 0;i<stack.size();i++){
-            if(res.length() == 0 && (Character)arr[i] == '0'){
-                continue;
-            }
-            res = res.append(arr[i]);
-        }
-        if(res.length() == 0){
+        if(k >= num.length()){
             return "0";
         }
-        return res.toString();
+        Stack<Character> stack = new Stack<>();
+        for(int i = 0;i<num.length();i++){
+            char n = num.charAt(i);
+            while(k > 0 && stack.isEmpty() == false && stack.peek() - '0' > n - '0'){
+                stack.pop();
+                k-=1;
+            }
+            stack.push(n);
+        }
+        while(k > 0){
+            stack.pop();
+            k-=1;
+        }
+        StringBuilder sb = new StringBuilder(stack.size());
+        while(stack.isEmpty() == false){
+            sb.append(stack.pop());
+        }
+        sb.reverse();
+        String result = sb.toString().replaceFirst("^0+(?!$)", "");
+        return result;
     }
 }
