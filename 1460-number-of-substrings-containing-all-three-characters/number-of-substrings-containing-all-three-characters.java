@@ -1,39 +1,24 @@
 class Solution {
     public int numberOfSubstrings(String s) {
-        int l = 0;
-        int r = 0;
+        int left = 0;
+        int right = 0;
+        int [] index = new int[3];
+        Arrays.fill(index,-1);
         int res = 0;
-        Map<Character,Integer> map = new HashMap<>();
-        while(r < s.length()){
-            if(map.size() < 3){
-                if(map.containsKey(s.charAt(r))){
-                    map.put(s.charAt(r),map.get(s.charAt(r))+1);
-                }
-                else{
-                    map.put(s.charAt(r),1);
-                }
-                r+=1;
+        while(left < s.length()){
+            while((right < s.length()) && (index[0] == -1 || index[1] == -1 || index[2] == -1)){
+                index[s.charAt(right) - 'a'] = right;
+                right+=1;
             }
-            else if(map.size() == 3){
-                res += (s.length() - r + 1);
-                if(map.get(s.charAt(l)) == 1){
-                    map.remove(s.charAt(l));
-                }
-                else{
-                    map.put(s.charAt(l),map.get(s.charAt(l))-1);
-                }
-                l+=1;
+            if(right == s.length() && ((index[0] == -1 || index[1] == -1 || index[2] == -1))){
+                break;
             }
-        }
-        while(l < s.length() && map.size() == 3){
-            res += (s.length() - r + 1);
-            if(map.get(s.charAt(l)) == 1){
-                map.remove(s.charAt(l));
+            res += (s.length() - right + 1);
+            System.out.println(res);
+            if(index[s.charAt(left) - 'a'] == left){
+                index[s.charAt(left) - 'a'] = -1;
             }
-            else{
-                map.put(s.charAt(l),map.get(s.charAt(l))-1);
-            }
-            l+=1;
+            left +=1;
         }
         return res;
     }
