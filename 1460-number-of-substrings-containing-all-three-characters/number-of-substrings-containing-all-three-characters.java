@@ -14,7 +14,6 @@ class Solution {
                 break;
             }
             res += (s.length() - right + 1);
-            System.out.println(res);
             if(index[s.charAt(left) - 'a'] == left){
                 index[s.charAt(left) - 'a'] = -1;
             }
