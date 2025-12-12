@@ -21,7 +21,13 @@ class Solution {
         nums[i-1] = nums[numToSwapIndex];
         nums[numToSwapIndex] = temp;
         int left = i;
-        int right = len;
-        Arrays.sort(nums, left, right);
+        int right = len-1;
+        while(left < right){
+            temp = nums[right];
+            nums[right] = nums[left];
+            nums[left] = temp;
+            left+=1;
+            right-=1;
+        }
     }
 }
