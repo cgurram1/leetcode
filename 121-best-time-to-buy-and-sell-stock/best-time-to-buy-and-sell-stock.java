@@ -1,11 +1,17 @@
+
+// [7,1,5,3,6,4]
+
+// min : 1
+// diff: 5
 class Solution {
     public int maxProfit(int[] prices) {
-        int res = 0;
-        int currMin = Integer.MAX_VALUE;
+        int minV = Integer.MAX_VALUE;
+        int diff = 0;
         for(int i = 0;i<prices.length;i++){
-            currMin = Math.min(currMin, prices[i]);
-            res = Math.max(res,prices[i] - currMin);
+            minV = Math.min(minV, prices[i]);
+            diff = Math.max(diff, prices[i] - minV);
         }
-        return res;
+        return diff;
+        
     }
 }
