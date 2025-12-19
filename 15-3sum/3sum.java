@@ -5,6 +5,9 @@ class Solution {
         Arrays.sort(nums);
         List<Integer> curr;
         while(i < nums.length - 2){
+            if(nums[i] > 0){
+                break;
+            }
             curr = new ArrayList<>();
             int j = i + 1;
             int k = nums.length-1;
