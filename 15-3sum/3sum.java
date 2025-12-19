@@ -8,16 +8,11 @@ class Solution {
             if(nums[i] > 0){
                 break;
             }
-            curr = new ArrayList<>();
             int j = i + 1;
             int k = nums.length-1;
             while(j < k){
-                curr = new ArrayList<>();
                 if(nums[j] + nums[k] == -1* nums[i]){
-                    curr.add(nums[i]);
-                    curr.add(nums[j]);
-                    curr.add(nums[k]);
-                    result.add(new ArrayList<>(curr));
+                    result.add(Arrays.asList(nums[i], nums[j], nums[k]));
                     while(j < k && nums[j+1] == nums[j]){
                         j+=1;
                     }
