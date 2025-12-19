@@ -1,32 +1,46 @@
 class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
-        Arrays.sort(nums);
         List<List<Integer>> result = new ArrayList<>();
-        for(int i = 0;i<nums.length-2;i++){
-            int left = i + 1;
-            int right = nums.length - 1;
-            if(i > 0 && nums[i] == nums[i-1]){
-                continue;
-            }
-            while(left < right){
-                if(nums[left] + nums[right] == -1 * nums[i]){
-                    result.add(Arrays.asList(nums[i], nums[left], nums[right]));
-                    while(left < right && nums[left] == nums[left+1]){
-                        left++;
+        int i = 0;
+        Arrays.sort(nums);
+        List<Integer> curr;
+        while(i < nums.length - 2){
+            curr = new ArrayList<>();
+            int j = i + 1;
+            int k = nums.length-1;
+            while(j < k){
+                curr = new ArrayList<>();
+                if(nums[j] + nums[k] == -1* nums[i]){
+                    curr.add(nums[i]);
+                    curr.add(nums[j]);
+                    curr.add(nums[k]);
+                    result.add(new ArrayList<>(curr));
+                    while(j < k && nums[j+1] == nums[j]){
+                        j+=1;
                     }
-                    while(right > left && nums[right] == nums[right-1]){
-                        right--;
+                    j+=1;
+                    while(k > j && nums[k-1] == nums[k]){
+                        k-=1;
                     }
-                    left++;
-                    right--;
+                    k-=1;
                 }
-                else if(nums[left] + nums[right] < -1 * nums[i]){
-                    left++;
+                else if(nums[j] + nums[k] > -1* nums[i]){
+                    while(k > j && nums[k-1] == nums[k]){
+                        k-=1;
+                    }
+                    k-=1;
                 }
                 else{
-                    right--;
+                    while(j < k && nums[j+1] == nums[j]){
+                        j+=1;
+                    }
+                    j+=1;
                 }
             }
+            while(i < nums.length - 2 && nums[i+1] == nums[i]){
+                i+=1;
+            }
+            i+=1;
         }
         return result;
     }
