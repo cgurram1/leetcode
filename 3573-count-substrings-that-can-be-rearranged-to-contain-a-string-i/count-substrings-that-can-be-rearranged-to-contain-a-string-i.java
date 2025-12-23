@@ -6,23 +6,22 @@ class Solution {
         }
         int left = 0;
         long count = 0;
+        int charsRemaining = word2.length();
         for(int right = 0;right < word1.length();right++){
             map.put(word1.charAt(right), map.getOrDefault(word1.charAt(right),0) - 1);
-            while(left <= right && isValid(map)){
+            if(map.get(word1.charAt(right)) >= 0){
+                charsRemaining-=1;
+            }
+            while(left <= right && charsRemaining == 0){
                 count+=(word1.length() - right);
                 map.put(word1.charAt(left), map.get(word1.charAt(left)) + 1);
+                if(map.get(word1.charAt(left)) > 0){
+                    charsRemaining+=1;
+                }
                 left+=1;
             }
         }
         return count;
 
-    }
-    public boolean isValid(HashMap<Character, Integer> map){
-        for(Map.Entry<Character, Integer> item : map.entrySet()){
-            if(item.getValue() > 0){
-                return false;
-            }
-        }
-        return true;
     }
 }
