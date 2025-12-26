@@ -17,19 +17,15 @@ class Solution {
         int [] left = new int[customers.length()+1];
         int [] right = new int[customers.length()+1];
         for(int i = 1;i<=customers.length();i++){
-            if(customers.charAt(i-1) == 'Y'){
-                left[i] = left[i-1];
-            }
-            else{
-                left[i] = left[i-1] + 1;
+            left[i] = left[i-1];
+            if(customers.charAt(i-1) == 'N'){
+                left[i] += 1;
             }
         }
         for(int i = customers.length()-2;i>=-1;i--){
+            right[i+1] = right[i+2];
             if(customers.charAt(i+1) == 'Y'){
-                right[i+1] = right[i+2] + 1;
-            }
-            else{
-                right[i+1] = right[i+2];
+                right[i+1] += 1;
             }
         }
         int minRes = Integer.MAX_VALUE;
