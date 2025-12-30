@@ -29,9 +29,9 @@ class Solution {
         }
 
         int people = 1 + currSum;
-        
+
         if (city != 0) {
-            fuel += (people + seats - 1) / seats;
+            fuel += Math.ceil((double)people/seats);
         }
 
         return people;
