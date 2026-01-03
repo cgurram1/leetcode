@@ -1,47 +1,45 @@
 class Solution {
     public int leastInterval(char[] tasks, int n) {
-        int [] freqs = new int[26];
-        PriorityQueue<Pair> pq = new PriorityQueue<>((a,b) -> {return b.freq - a.freq;});
-        for(int i = 0;i<tasks.length;i++){
-            freqs[tasks[i] - 'A']+=1;
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+        Queue<Pair> waitingQueue = new LinkedList<>();
+
+        int[] freqs = new int[26];
+        for (char task : tasks) {
+            freqs[task - 'A']++;
         }
-        List<Pair> list = new ArrayList<>();
-        for(int i = 0;i<26;i++){
-            if(freqs[i] > 0){
-                list.add(new Pair((char)(i + 'A'),freqs[i]));
-            }
+
+        for (int f : freqs) {
+            if (f > 0) pq.add(f);
         }
-        int curr;
-        int res = 0;
-        while(list.size() > 0 || pq.size() > 0){
-            curr = n;
-            for(int i = 0;i<list.size();i++){
-                pq.add(list.get(i));
+
+        int time = 0;
+
+        while (!pq.isEmpty() || !waitingQueue.isEmpty()) {
+
+            while (!waitingQueue.isEmpty() &&
+                   waitingQueue.peek().timeAvailableAt == time) {
+                pq.add(waitingQueue.poll().freq);
             }
-            list.clear();
-            while(curr >= 0){
-                if(!pq.isEmpty()){
-                    Pair p = pq.poll();
-                    p.freq -=1;
-                    if(p.freq > 0){
-                        list.add(p);
-                    }
+
+            if (!pq.isEmpty()) {
+                int curr = pq.poll();
+                if (curr - 1 > 0) {
+                    waitingQueue.add(new Pair(curr - 1, time + n + 1));
                 }
-                if(list.size() == 0 && pq.size() == 0){
-                    return res+1;
-                }
-                res+=1;
-                curr-=1;
             }
+
+            time++;
         }
-        return res;
+        return time;
     }
 }
-class Pair{
-    char ch;
+
+class Pair {
     int freq;
-    public Pair(char c, int f){
-        this.ch = c;
-        this.freq = f;
+    int timeAvailableAt;
+
+    Pair(int freq, int timeAvailableAt) {
+        this.freq = freq;
+        this.timeAvailableAt = timeAvailableAt;
     }
 }
