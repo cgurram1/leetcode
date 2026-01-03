@@ -1,21 +1,40 @@
-import java.util.*;
+/**
+
+[1,2,3,6,2,3,4,7,8]
+{
+    1: 0
+    2: 1
+    3: 1
+    4: 1
+    6: 1
+    7: 1
+    8: 1
+}
+
+ */
 
 class Solution {
     public boolean isNStraightHand(int[] hand, int groupSize) {
-        if (hand.length % groupSize != 0) return false;
-        Map<Integer, Integer> count = new HashMap<>();
-        for (int card : hand) {
-            count.put(card, count.getOrDefault(card, 0) + 1);
+        if(hand.length % groupSize != 0){
+            // System.out.println("1");
+            return false;
         }
-        List<Integer> unique = new ArrayList<>(count.keySet());
-        Collections.sort(unique);
-        for (int num : unique) {
-            int freq = count.get(num);
-            if (freq > 0) {
-                for (int i = 0; i < groupSize; i++) {
-                    int next = num + i;
-                    if (count.getOrDefault(next, 0) < freq) return false;
-                    count.put(next, count.get(next) - freq);
+        Arrays.sort(hand);
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int i = 0;i<hand.length;i++){
+            map.put(hand[i], map.getOrDefault(hand[i],0)+1);
+        }
+        for(int i = 0;i<hand.length;i++){
+            if(map.get(hand[i]) > 0){
+                map.put(hand[i], map.get(hand[i]) - 1);
+                for(int j = hand[i] + 1;j<hand[i]+groupSize;j++){
+                    if(map.containsKey(j) == false || map.get(j) == 0){
+                        // System.out.println("2");
+                        return false;
+                    }
+                    else{
+                        map.put(j, map.get(j) - 1);
+                    }
                 }
             }
         }
