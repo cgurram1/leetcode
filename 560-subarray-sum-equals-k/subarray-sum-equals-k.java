@@ -1,13 +1,28 @@
+/**
+
+[1,2,3]
+
+
+[
+    1: 1
+    3: 1
+]
+
+ */
+
+
 class Solution {
     public int subarraySum(int[] nums, int k) {
-        HashMap<Integer,Integer> map = new HashMap<>();
-        map.put(0,1);
-        int sum = 0;
         int count = 0;
+        int cumSum = 0;
+        Map<Integer,Integer> map = new HashMap<>();
+        map.put(0,1);
         for(int i = 0;i<nums.length;i++){
-            sum+=nums[i];
-            count+=map.getOrDefault(sum - k,0);
-            map.put(sum, map.getOrDefault(sum,0) + 1);
+            cumSum+=nums[i];
+            if(map.containsKey(cumSum - k)){
+                count+=map.get(cumSum - k);
+            }
+            map.put(cumSum, map.getOrDefault(cumSum,0) + 1);
         }
         return count;
     }
