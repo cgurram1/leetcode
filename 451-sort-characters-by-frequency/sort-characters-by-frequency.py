@@ -6,10 +6,11 @@ class Solution:
                 freqs[c]+=1
             else:
                 freqs[c] = 1
-        sorted_freqs = dict(sorted(freqs.items(), key=lambda x:x[1],reverse=True))
+        sorted_freqs = sorted(freqs.items(), key=lambda x:x[1],reverse=True)
+        # print(sorted_freqs)
         res = ""
-        for key,value in sorted_freqs.items():
-            for i in range(value):
-                res+=key
+        for item in sorted_freqs:
+            for i in range(item[1]):
+                res+=item[0]
         # print(sorted_freqs)
         return res
