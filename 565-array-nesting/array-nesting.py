@@ -6,16 +6,15 @@ class Solution:
         def rec(index):
             nonlocal resSet
             if index >= len(nums):
-                return
+                return 0
             if index not in resSet:
                 resSet.add(index)
-                rec(nums[index])
+                return 1 + rec(nums[index])
             else:
-                return
+                return 0
 
         for i in range(len(nums)):
-            rec(i)
-            result = max(result, len(resSet))
+            result = max(result, rec(i))
             resSet = set()
 
         return result
