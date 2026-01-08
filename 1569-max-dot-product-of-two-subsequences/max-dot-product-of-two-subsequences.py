@@ -16,6 +16,6 @@ class Solution:
             both = nums1[left] * nums2[right] + max(0,rec(left + 1, right + 1))
             top = rec(left+1,right)
             bottom = rec(left,right + 1)
-            none = rec(left +1,right + 1)
-            return max(both, top, bottom, none)
+            # none = rec(left +1,right + 1)
+            return max(both, top, bottom)
         return rec(0,0)
