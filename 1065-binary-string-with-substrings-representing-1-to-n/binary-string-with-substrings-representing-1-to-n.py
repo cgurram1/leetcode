@@ -5,7 +5,7 @@ class Solution:
         for i in range(len(s)):
             left = 0
             right = i+1
-            while(right <= len(s)):
+            while(right <= len(s) and len(nums) < n):
                 val = int(s[left:right],2)
                 if(0 < val <= n):
                     nums.add(val)
