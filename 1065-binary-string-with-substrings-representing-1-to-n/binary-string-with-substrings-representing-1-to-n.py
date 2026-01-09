@@ -1,0 +1,15 @@
+class Solution:
+    def queryString(self, s: str, n: int) -> bool:
+        nums = set()
+
+        for i in range(len(s)):
+            left = 0
+            right = i+1
+            while(right <= len(s)):
+                val = int(s[left:right],2)
+                if(0 < val <= n):
+                    nums.add(val)
+                right+=1
+                left+=1
+        # print(nums)
+        return len(nums) == n
