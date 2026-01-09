@@ -13,5 +13,8 @@ class Solution:
                         nums.add(val)
                 right+=1
                 left+=1
+            if len(nums) == n:
+                return True
+            
         # print(nums)
-        return len(nums) == n
+        return False
