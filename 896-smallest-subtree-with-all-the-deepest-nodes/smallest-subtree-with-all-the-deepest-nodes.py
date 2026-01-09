@@ -36,7 +36,5 @@ class Solution:
                     return leftAns
             
             return None
-        
-        # for node in treeMap:
-        #     print(node.val,treeMap[node])
+
         return commonAncestor(root,maxDepth)
