@@ -3,10 +3,10 @@ class Solution:
         total = sum(matchsticks)
         groupSize = total//4
         matchsticks = sorted(matchsticks,reverse=True)
-        if groupSize != (int)(total/4):
-            return False
-        if(max(matchsticks) > groupSize):
-            return False
+        # if groupSize != (int)(total/4):
+        #     return False
+        # if(max(matchsticks) > groupSize):
+        #     return False
         def fun(index,groups):
             if(index == len(matchsticks)):
                 return True
