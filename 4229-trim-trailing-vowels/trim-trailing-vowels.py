@@ -1,14 +1,8 @@
 class Solution:
     def trimTrailingVowels(self, s: str) -> str:
-        res = []
-        temp = []
-        for ch in s:
-            if ch not in ['a','e','i','o','u']:
-                res.extend(temp)
-                res.append(ch)
-                temp = []
-            else:
-                temp.append(ch)
-        return ''.join(res)
-        
+        i = len(s)-1
+        while i >= 0 and s[i] in ['a','e','i','o','u']:
+            i-=1
+        return s[:i+1]
+
 
