@@ -27,10 +27,10 @@ class Solution:
     def minCost(self, n: int) -> int:
         if n == 1 or n == 2:
             return n - 1
-        dp = [1,1]
+        prev = 1
         i = 3
         while i <= n:
-            dp.append((i-1 + dp[i-2]))
+            prev = (i-1 + prev)
             i+=1
-        return dp[-1]
+        return prev
         
