@@ -23,6 +23,6 @@ class Solution:
                 if nr >= 0 and nr < len(image) and nc >= 0 and nc < len(image[0]) and visited[nr][nc] == 0 and image[nr][nc] == rootColor:
                     visited[nr][nc] = 1
                     DFS(nr,nc,rootColor)
-        # BFS(sr,sc)
-        DFS(sr,sc,image[sr][sc])
+        BFS(sr,sc)
+        # DFS(sr,sc,image[sr][sc])
         return image
