@@ -23,6 +23,6 @@ class Solution:
         for node in range(len(isConnected)):
             if visited[node] == 0:
                 res+=1
-                # BFS(node)
-                DFS(node)
+                BFS(node)
+                # DFS(node)
         return res
