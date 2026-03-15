@@ -9,17 +9,13 @@ class Solution:
                 if mat[r][c] == 0:
                     result[r][c] = 0
                     queue.append((r,c))
-        
+        dirs = [(1,0),(0,1),(-1,0),(0,-1)]
         while queue:
             cr,cc = queue.popleft()
-            for di, dj in [(1,0),(0,1),(-1,0),(0,-1)]:
+            for di, dj in dirs:
                 nr, nc = cr + di, cc + dj
-                if nr >= 0 and nr < n and nc >= 0 and nc < m:
+                if 0 <= nr < n and 0 <= nc < m:
                     if result[nr][nc] == float('inf'):
                         result[nr][nc] = result[cr][cc] + 1
                         queue.append((nr,nc))
         return result
-
-
-
-        
