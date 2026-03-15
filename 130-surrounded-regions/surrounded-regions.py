@@ -16,7 +16,6 @@ class Solution:
                 queue.append((r,0))
             if board[r][m-1] == 'O':
                 queue.append((r,m-1))
-        print(queue)
         def DFS(node):
             x,y = node[0],node[1]
             board[x][y] = -1
