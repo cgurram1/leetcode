@@ -1,32 +1,27 @@
 class Solution:
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
-        if endWord not in wordList:
-            return 0
-        if beginWord not in wordList:
-            wordList.insert(0,beginWord)
-        grid = [[] for _ in range(len(wordList))]
-        for i in range(len(grid)):
-            for j in range(i+1,len(grid)):
-                count = 0
-                for k in range(len(wordList[i])):
-                    if wordList[i][k] != wordList[j][k]:
-                        count+=1
-                        if count == 2:
-                            break
-                if count == 1:
-                    grid[i].append(j)
-                    grid[j].append(i)
-        src = wordList.index(beginWord)
-        dist = [float('inf') for _ in range(len(wordList))]
-        dist[src] = 0
-        queue = [src]
-        dest = wordList.index(endWord)
-        while(queue):
-            curr = queue.pop(0)
-            for nextNode in grid[curr]:
-                if dist[curr] + 1 < dist[nextNode]:
-                    dist[nextNode] = dist[curr] + 1
-                    queue.append(nextNode)
-        if dist[dest] == float('inf'):
-            return 0
-        return dist[dest] + 1
+        patternMap = defaultdict(list)
+        for word in wordList:
+            for i in range(len(word)):
+                pattern = word[:i] + '*' + word[i+1:]
+                patternMap[pattern].append(word)
+        queue = deque()
+        queue.append(beginWord)
+        queue.append(None)
+        visited = set()
+        level = 1
+        while queue[0] != None:
+            level += 1
+            while queue[0] != None:
+                currWord = queue.popleft()
+                visited.add(currWord)
+                for i in range(len(word)):
+                    pattern = currWord[:i] + '*' + currWord[i+1:]
+                    for adjWord in patternMap[pattern]:
+                        if adjWord == endWord:
+                            return level
+                        if adjWord not in visited:
+                            queue.append(adjWord)
+            queue.append(queue.popleft())
+        return 0
+
