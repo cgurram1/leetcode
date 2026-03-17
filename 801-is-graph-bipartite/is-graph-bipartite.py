@@ -1,6 +1,6 @@
 class Solution:
     def isBipartite(self, graph: List[List[int]]) -> bool:
-        queue = deque()
+        # queue = deque()
         visited = [-1 for _ in range(len(graph))]
         def BFS(node):
             queue.append(node)
@@ -21,9 +21,25 @@ class Solution:
                         elif visited[adjNode] == 1:
                             return False
             return True
+        def DFS(node,color):
+            visited[node] = color
+            for adjNode in graph[node]:
+                if visited[node] == 0:
+                    if visited[adjNode] == -1:
+                        if DFS(adjNode,1) == False:
+                            return False
+                    elif visited[adjNode] == 0:
+                        return False
+                else:
+                    if visited[adjNode] == -1:
+                        if DFS(adjNode,0) == False:
+                            return False
+                    elif visited[adjNode] == 1:
+                        return False
+            return True
         for node in range(len(graph)):
             if visited[node] == -1:
-                if BFS(node) == False:
+                if DFS(node,0) == False:
                     return False
         return True
 
