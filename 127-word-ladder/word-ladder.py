@@ -9,7 +9,6 @@ class Solution:
         queue.append((beginWord,1))
         visited = set()
         visited.add(beginWord)
-        level = 1
         while queue:
             currWord,level = queue.popleft()
             for i in range(len(word)):
