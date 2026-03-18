@@ -1,22 +1,20 @@
 class Solution:
     def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
-        if grid[0][0] != 0:
+        if grid[0][0] == 1:
             return -1
-        visited = [[float('inf') for _ in range(len(grid))] for _ in range(len(grid))]
-        x = [1,1,1,-1,-1,-1,0,0]
-        y = [1,0,-1,1,0,-1,1,-1]
-        pq = [(0,(0,0))]
-        dist = 0
-        while(pq):
-            dist,(i,j) = heapq.heappop(pq)
-            visited[i][j] = dist
-            for k in range(8):
-                nexti = i + x[k]
-                nextj = j + y[k]
-                if nexti >= 0 and nexti < len(grid) and nextj >= 0 and nextj < len(grid) and grid[nexti][nextj] == 0:
-                    if visited[nexti][nextj] > dist + 1:
-                        visited[nexti][nextj] = dist + 1
-                        heapq.heappush(pq,(dist + 1, (nexti,nextj)))
-        if visited[-1][-1] == float('inf'):
-            return -1
-        return visited[-1][-1] + 1
+        visited = [[-1]*len(grid[0]) for _ in range(len(grid))]
+        queue = deque()
+        queue.append((0,0,1))
+        dirs = [(0,1),(0,-1),(1,0),(-1,0),(1,-1),(-1,1),(-1,-1),(1,1)]
+        visited[0][0] = 1
+        while queue:
+            ci,cj,level = queue.popleft()
+            if ci == len(grid) - 1 and cj == len(grid[0])-1:
+                return level
+            for di,dj in dirs:
+                ni,nj = ci + di, cj + dj
+                if 0 <= ni < len(grid) and 0 <= nj < len(grid[0]):
+                    if visited[ni][nj] == -1 and grid[ni][nj] == 0:
+                        visited[ni][nj] = 1
+                        queue.append((ni,nj,level+1))
+        return -1
