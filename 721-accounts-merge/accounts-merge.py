@@ -13,9 +13,8 @@ class Solution:
         mapping = {}
         for account in accounts:
             for email in account[1:]:
-                if email not in parent:
-                    parent[email] = email
-                    mapping[email] = account[0]
+                parent[email] = email
+                mapping[email] = account[0]
         for account in accounts:
             for i in range(1,len(account)-1):
                 addEdge(account[i],account[i+1])
