@@ -9,14 +9,13 @@ class Solution:
                 return e
             parent[e] = find(parent[e])
             return parent[e]
-        
-
         parent = {}
         mapping = {}
         for account in accounts:
             for email in account[1:]:
-                parent[email] = email
-                mapping[email] = account[0]
+                if email not in parent:
+                    parent[email] = email
+                    mapping[email] = account[0]
         for account in accounts:
             for i in range(1,len(account)-1):
                 addEdge(account[i],account[i+1])
