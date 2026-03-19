@@ -1,32 +1,37 @@
 class Solution:
     def makeConnected(self, n: int, connections: List[List[int]]) -> int:
-        parents = [i for i in range(n)]
-        rank = [0 for _ in range(n)]
-        def findPar(x):
-            if parents[x] != x:
-                parents[x] = findPar(parents[x])
-            return parents[x]
-        def union(u,v):
-            par_u = findPar(u)
-            par_v = findPar(v)
-            if par_u == par_v:
-                return True
-            if rank[par_u] == rank[par_v]:
-                parents[par_u] = parents[par_v]
-                rank[par_v]+=1
-            elif rank[par_u] < rank[par_v]:
-                parents[par_u] = parents[par_v]
-            else:
-                parents[par_v] = parents[par_u]
-            return False
-        extraEdges = 0
-        for connection in connections:
-            if union(connection[0],connection[1]):
-                extraEdges+=1
-        for i in range(n):
-            findPar(i)
-        comps = len(set(parents))
-        if extraEdges + 1 >= comps:
-            return comps - 1
-        return -1
+        if len(connections) < n-1:
+            return -1
+        def find(n):
+            if parent[n] == n:
+                return n
+            parent[n] = find(parent[n])
+            return parent[n]
 
+
+
+        def union(n1,n2):
+            pn1 = find(n1)
+            pn2 = find(n2)
+            if rank[pn1] == rank[pn2]:
+                parent[pn1] = pn2
+                rank[pn2]+=1
+            elif rank[pn2] > rank[pn1]:
+                parent[pn1] = pn2
+            else:
+                parent[pn2] = pn1
+
+
+        parent = [i for i in range(n)]
+        rank = [0 for _ in range(n)]
+
+        for connection in connections:
+            union(connection[0],connection[1])
+
+
+        result = set()
+        for i in range(n):
+            result.add(find(i))
+        return len(result) - 1
+
+        
