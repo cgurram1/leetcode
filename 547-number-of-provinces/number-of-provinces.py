@@ -1,28 +1,23 @@
 class Solution:
     def findCircleNum(self, isConnected: List[List[int]]) -> int:
-        adjList = [[] for _ in range(len(isConnected))]
-        for r in range(len(isConnected)):
-            for c in range(len(isConnected)):
-                if r != c and isConnected[r][c] == 1:
-                    adjList[r].append(c)
-        def BFS(node):
-            queue = [node]
-            while queue:
-                currNode = queue.pop()
-                for adjNode in adjList[currNode]:
-                    if visited[adjNode] == 0:
-                        visited[adjNode] = 1
-                        queue.append(adjNode)
-        def DFS(node):
-            visited[node] = 1
-            for adjNode in adjList[node]:
-                if visited[adjNode] == 0:
-                    DFS(adjNode)
-        res = 0
-        visited = [0 for _ in range(len(isConnected))]
-        for node in range(len(isConnected)):
-            if visited[node] == 0:
-                res+=1
-                BFS(node)
-                # DFS(node)
-        return res
+        parent = {}
+        def find(n):
+            if parent[n] == n:
+                return n
+            parent[n] = find(parent[n])
+            return parent[n]
+        def union(n1,n2):
+            pn1 = find(n1)
+            pn2 = find(n2)
+            parent[pn1] = pn2
+        result = set()
+        for i in range(len(isConnected)):
+            parent[i] = i
+        for i in range(len(isConnected)):
+            for j in range(len(isConnected)):
+                if isConnected[i][j] == 1:
+                    union(i,j)
+        for i in range(len(isConnected)):
+            result.add(find(i))
+        return len(result)
+        return 0
