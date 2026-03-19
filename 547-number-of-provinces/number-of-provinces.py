@@ -12,10 +12,9 @@ class Solution:
         result = set()
         parent = [i for i in range(len(isConnected))]
         for i in range(len(isConnected)):
-            for j in range(len(isConnected)):
+            for j in range(i,len(isConnected)):
                 if isConnected[i][j] == 1:
                     union(i,j)
         for i in range(len(isConnected)):
             result.add(find(i))
         return len(result)
-        return 0
