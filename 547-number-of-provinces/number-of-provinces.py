@@ -1,6 +1,5 @@
 class Solution:
     def findCircleNum(self, isConnected: List[List[int]]) -> int:
-        parent = {}
         def find(n):
             if parent[n] == n:
                 return n
@@ -11,8 +10,7 @@ class Solution:
             pn2 = find(n2)
             parent[pn1] = pn2
         result = set()
-        for i in range(len(isConnected)):
-            parent[i] = i
+        parent = [i for i in range(len(isConnected))]
         for i in range(len(isConnected)):
             for j in range(len(isConnected)):
                 if isConnected[i][j] == 1:
