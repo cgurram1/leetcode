@@ -16,8 +16,9 @@ class Solution:
                 parent[email] = email
                 mapping[email] = account[0]
         for account in accounts:
-            for i in range(1,len(account)-1):
-                addEdge(account[i],account[i+1])
+            first = account[1]
+            for email in account[2:]:
+                addEdge(first,email)
         result = defaultdict(set)
         for account in accounts:
             for email in account[1:]:
