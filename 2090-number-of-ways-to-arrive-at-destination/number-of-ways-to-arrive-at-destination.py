@@ -1,24 +1,27 @@
 class Solution:
     def countPaths(self, n: int, roads: List[List[int]]) -> int:
-        count = [1 for _ in range(n)]
-        dist = [float('inf') for _ in range(n)]
-        dist[0] = 0
-        pq = [(0,0)]
-        adj = [[] for _ in range(n)]
-        for arr in roads:
-            adj[arr[0]].append((arr[1],arr[2]))
-            adj[arr[1]].append((arr[0],arr[2]))
-        while(pq):
-            currDist,currNode = heapq.heappop(pq)
-            if currDist > dist[currNode]:
+        dists = [float('inf') for _ in range(n)]
+        dists[0] = 0
+        ways = [0 for _ in range(n)]
+        ways[0] = 1
+
+        adjList = [[] for _ in range(n)]
+        for road in roads:
+            adjList[road[0]].append((road[1],road[2]))
+            adjList[road[1]].append((road[0],road[2]))
+
+        pq = []
+        heapq.heappush(pq, (0,0))
+        count = 0
+        while pq:
+            currDist, currCity = heapq.heappop(pq)
+            if currDist > dists[currCity]:
                 continue
-            for nextNode,d in adj[currNode]:
-                nextDist = currDist + d
-                if nextDist < dist[nextNode]:
-                    dist[nextNode] = nextDist
-                    count[nextNode] = count[currNode]
-                    heapq.heappush(pq,(nextDist,nextNode))
-                elif nextDist == dist[nextNode]:
-                    count[nextNode] += count[currNode]
-        return count[-1] % (10 ** 9 + 7)
-        
+            for adjCity,price in adjList[currCity]:
+                if currDist + price < dists[adjCity]:
+                    dists[adjCity] = currDist + price
+                    ways[adjCity] = ways[currCity]
+                    heapq.heappush(pq, (dists[adjCity],adjCity))
+                elif currDist + price == dists[adjCity]:
+                    ways[adjCity] += ways[currCity]
+        return ways[n-1] % (10**9 + 7)
