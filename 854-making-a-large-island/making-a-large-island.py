@@ -15,6 +15,8 @@ class Solution:
         def union(cord1, cord2):
             p1 = find(cord1)
             p2 = find(cord2)
+            if size[p1] < size[p2]:
+                p1, p2 = p2, p1
             parent[p1] = p2
             size[p2]+=size[p1]
             size.pop(p1)
