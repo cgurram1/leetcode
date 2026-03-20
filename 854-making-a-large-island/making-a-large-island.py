@@ -45,6 +45,6 @@ class Solution:
                         if 0 <= ni < len(grid) and 0 <= nj < len(grid[0]) and grid[ni][nj] == 1:
                             parents.add(find((ni,nj)))
                     for par in parents:
-                        tempSize+=size[find(par)]
+                        tempSize+=size[par]
                     result = max(result, tempSize+1)
         return result
