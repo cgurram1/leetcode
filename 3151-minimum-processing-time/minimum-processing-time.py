@@ -11,7 +11,6 @@ class Solution:
         tasks.sort(reverse=True)
         processorTime.sort()
         for i in range(0,len(tasks),4):
-            maxV = max(tasks[i:i+4])
-            totalTime = max(totalTime, (maxV + processorTime[processor]))
+            totalTime = max(totalTime, (tasks[i] + processorTime[processor]))
             processor+=1
         return totalTime
