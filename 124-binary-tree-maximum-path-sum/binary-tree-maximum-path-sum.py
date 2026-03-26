@@ -13,12 +13,12 @@ class Solution:
                 return 0
             leftSum = REC(node.left)
             rightSum = REC(node.right)
-            result = max(result, max(node.val, max(node.val + leftSum, max(node.val + rightSum,node.val + rightSum + leftSum))))
-            maxV = max(leftSum,rightSum)
-            returnVal = max(node.val,node.val + maxV)
-            if returnVal > 0:
-                return returnVal
-            return 0
+            if leftSum < 0:
+                leftSum = 0
+            if rightSum < 0:
+                rightSum = 0
+            result = max(result, node.val + rightSum + leftSum)
+            return node.val + max(leftSum,rightSum)
 
         REC(root)
         return result
