@@ -1,15 +1,17 @@
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
-        result = []
-        def myRec(o,c,res):
-            if o == n and c == n and res not in result:
-                result.append(res)
+        def REC(op,cl,arr):
+            if op == n and cl == n:
+                result.append("".join(arr))
                 return
-            if o <= n:
-                if o > c:
-                    myRec(o,c+1, res+")") 
-                if o < n:
-                    myRec(o+1,c,res+ "(")
-            
-        myRec(0,0,"")
+            if op < n:
+                arr.append('(')
+                REC(op+1,cl,arr)
+                arr.pop()
+            if cl < op:
+                arr.append(')')
+                REC(op,cl+1,arr)
+                arr.pop()
+        result = []
+        REC(0,0,[])
         return result
