@@ -1,34 +1,23 @@
-from collections import Counter
 class Solution:
     def leastInterval(self, tasks: List[str], n: int) -> int:
-        string = "".join(tasks)
-        freqArr = Counter(string)
-        arr = []
-        for i in freqArr:
-            arr.append(-freqArr[i])
-        heapq.heapify(arr)
-        index = 0
-        q = []
-        res = 0
-        while(True):
-            if len(q) == 0 and len(arr) == 0:
-                return res
-            if index <= n:
-                if len(arr) > 0:
-                    popped = heapq.heappop(arr)
-                    res+=1
-                    index+=1
-                    currCount = -popped - 1
-                    if currCount > 0:
-                        q.append(-currCount)
+        maxHeap = []
+        counter = Counter(tasks)
+        waitQueue = deque()
+        for key in counter:
+            heapq.heappush(maxHeap,(-counter[key],key))
+        time = 0
+        while waitQueue or maxHeap:
+            if waitQueue and time - waitQueue[0][1] > n:
+                poppedTask,_ = waitQueue.popleft()
+                heapq.heappush(maxHeap, (-counter[poppedTask],poppedTask))
+            if maxHeap:
+                _, task = heapq.heappop(maxHeap)
+                counter[task]-=1
+                if counter[task] == 0:
+                    counter.pop(task)
                 else:
-                    res+=1
-                    index+=1
-            else:
-                arr.extend(q)
-                q = []
-                heapq.heapify(arr)
-                index = 0
-        return 0
+                    waitQueue.append((task,time))
+            time+=1
+        return time
+                
             
-        
