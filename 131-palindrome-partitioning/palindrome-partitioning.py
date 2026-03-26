@@ -1,14 +1,23 @@
 class Solution:
     def partition(self, s: str) -> List[List[str]]:
-        res = []
-        def myFun(index,s,path,res):
+        def isPalindrome(left,right):
+            while left < right:
+                if s[left] != s[right]:
+                    return False
+                left+=1
+                right-=1
+            return True
+        
+        def REC(index,arr):
+            # print(arr)
             if index == len(s):
-                res.append(path[:])
+                result.append(arr.copy())
                 return
             for i in range(index,len(s)):
-                if s[index:i+1] == s[index:i+1][::-1]:
-                    path.append(s[index:i+1])
-                    myFun(i+1,s,path,res)
-                    path.pop(-1)
-        myFun(0,s,[],res)
-        return res
+                if isPalindrome(index, i):
+                    arr.append(s[index:i+1])
+                    REC(i + 1,arr)
+                    arr.pop()
+        result = []
+        REC(0,[])
+        return result
