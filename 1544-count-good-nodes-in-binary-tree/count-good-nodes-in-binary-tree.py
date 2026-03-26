@@ -16,18 +16,19 @@
 
 """
 class Solution:
-    def goodNodes(self, root: TreeNode) -> int:
-        def REC(node,stack):
-            if node == None:
+    def goodNodes(self, root):
+        def REC(node, maxSoFar):
+            if not node:
                 return 0
-            recns = 0
-            if not stack or node.val >= stack[-1]:
-                recns = 1
-                stack.append(node.val)
-            recns+=REC(node.left,stack) + REC(node.right,stack)
-            if stack[-1] == node.val:
-                stack.pop()
-            return recns
 
-        return REC(root,[])
+            count = 1 if node.val >= maxSoFar else 0
+
+            maxSoFar = max(maxSoFar, node.val)
+
+            count += REC(node.left, maxSoFar)
+            count += REC(node.right, maxSoFar)
+
+            return count
+
+        return REC(root, float('-inf'))
 
