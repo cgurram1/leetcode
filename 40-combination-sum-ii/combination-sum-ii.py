@@ -1,22 +1,28 @@
+"""
+
+10,1,2,7,6,1,5
+
+1,1,2,5,6,7,10
+
+"""
 class Solution:
     def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
-        res = []
-        candidates.sort()
-        def myFun(index, arr,s):
-            print(arr)
-            if s == target:
-                res.append(arr[:])
+        def REC(index, total, arr):
+            if total == target:
+                result.append(arr.copy())
                 return
-            if s > target:
+            if index == len(candidates) or total > target:
                 return
-            for j in range(index,len(candidates)):
-                if j > index and candidates[j] == candidates[j-1]:
-                    continue
-                if candidates[j] > target:
-                    break
-                arr.append(candidates[j])
-                myFun(j+1,arr,s+candidates[j])
-                arr.pop(-1)
-        myFun(0,[],0)
-        return res
+            #Pick
+            arr.append(candidates[index])
+            REC(index + 1, total + candidates[index], arr)
+            arr.pop()
+            #Do not Pick
+            while index + 1 < len(candidates) and candidates[index + 1] == candidates[index]:
+                index+=1
+            REC(index + 1, total, arr)
             
+        candidates.sort()  
+        result = []
+        REC(0,0,[])
+        return result
