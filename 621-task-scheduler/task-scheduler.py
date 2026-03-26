@@ -1,23 +1,24 @@
 class Solution:
-    def leastInterval(self, tasks: List[str], n: int) -> int:
-        maxHeap = []
+    def leastInterval(self, tasks, n):
         counter = Counter(tasks)
+        maxHeap = []
         waitQueue = deque()
         for key in counter:
-            heapq.heappush(maxHeap,(-counter[key],key))
+            heapq.heappush(maxHeap, (-counter[key], key))
         time = 0
-        while waitQueue or maxHeap:
-            if waitQueue and time - waitQueue[0][1] > n:
-                poppedTask,_ = waitQueue.popleft()
-                heapq.heappush(maxHeap, (-counter[poppedTask],poppedTask))
+        while maxHeap or waitQueue:
+            if waitQueue and time - waitQueue[0][1] >= n + 1:
+                task, _ = waitQueue.popleft()
+                heapq.heappush(maxHeap, (-counter[task], task))
             if maxHeap:
                 _, task = heapq.heappop(maxHeap)
-                counter[task]-=1
-                if counter[task] == 0:
-                    counter.pop(task)
-                else:
-                    waitQueue.append((task,time))
-            time+=1
+                counter[task] -= 1
+                if counter[task] > 0:
+                    waitQueue.append((task, time))
+            else:
+                time = waitQueue[0][1] + n + 1
+                continue
+            time += 1
         return time
                 
             
