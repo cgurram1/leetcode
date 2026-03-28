@@ -9,6 +9,7 @@ class Solution:
                 nxt = heapq.heappop(adjList[fr])
                 dfs(nxt)
             result.append(fr)
+            print(result)
         dfs("JFK")
         return result[::-1]
 
