@@ -1,16 +1,17 @@
 class Solution:
-    def constrainedSubsetSum(self, nums: List[int], k: int) -> int:
-        maxHeap = []
-        left = 0
-        maxResult = float('-inf')
-        temp = [n for n in nums]
+    def constrainedSubsetSum(self, nums, k):
+        dq = deque()
+        dp = nums[:]
 
-        while left < len(temp):
-            while maxHeap and left - maxHeap[0][1] > k:
-                heapq.heappop(maxHeap)
-            if maxHeap:
-                temp[left] = max(temp[left],temp[left]-maxHeap[0][0])
-            heapq.heappush(maxHeap,(-temp[left],left))
-            left+=1
-        return max(temp)
+        for i in range(len(nums)):
+            while dq and dq[0] < i - k:
+                dq.popleft()
+            if dq:
+                dp[i] = max(dp[i], dp[dq[0]] + nums[i])
+            while dq and dp[dq[-1]] <= dp[i]:
+                dq.pop()
+
+            dq.append(i)
+
+        return max(dp)
         
