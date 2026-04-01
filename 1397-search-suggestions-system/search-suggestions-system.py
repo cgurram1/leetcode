@@ -13,42 +13,40 @@ class Trie:
             currNode = currNode.children[ord(ch) - ord('a')]
             if i == len(word)-1:
                 currNode.isWord = True
-    def searchWord(self,word):
-        currNode = self.node
-        for i,ch in enumerate(word):
-            if currNode.children[ord(ch) - ord('a')] == None:
-                return False
-            currNode = currNode.children[ord(ch) - ord('a')]
-        return currNode.isWord
-    def suggest(self,s):
+
+class Solution:
+    def suggestedProducts(self, products: List[str], searchWord: str) -> List[List[str]]:
+        trie = Trie()
+        for product in products:
+            trie.addWord(product)
         result = []
-        currNode = self.node
-        for ch in s:
-            if currNode.children[ord(ch) - ord('a')] == None:
-                return []
+        currNode = trie.node
+
+        prefix = []
+        for ch in searchWord:
+            prefix.append(ch)
+
+            if not currNode:
+                result.append([])
+                continue
+
             currNode = currNode.children[ord(ch) - ord('a')]
-        def DFS(node, curr):
-            if len(result) < 3:
-                if node.isWord == True:
-                    result.append(''.join(curr))
+            suggestions = []
+
+            def DFS(node, curr):
+                if len(suggestions) == 3:
+                    return
+                if not node:
+                    return
+                if node.isWord:
+                    suggestions.append(''.join(curr))
                 for i in range(26):
-                    if node.children[i] != None:
+                    if node.children[i]:
                         curr.append(chr(i + ord('a')))
                         DFS(node.children[i], curr)
                         curr.pop()
-        DFS(currNode, list(s))
-        return result
 
-            
-class Solution:
-    def suggestedProducts(self, products: List[str], searchWord: str) -> List[List[str]]:
-        trieNode = Trie()
-        for product in products:
-            trieNode.addWord(product)
-        result = []
-        # for product in products:
-        #     print(product, trieNode.searchWord(product))
-        # print(trieNode.node.children)
-        for i in range(len(searchWord)):
-            result.append(trieNode.suggest(searchWord[:i+1]))
+            DFS(currNode, prefix[:])
+            result.append(suggestions)
+
         return result
