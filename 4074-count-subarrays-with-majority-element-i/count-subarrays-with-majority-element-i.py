@@ -7,15 +7,21 @@
 """
 class Solution:
     def countMajoritySubarrays(self, nums: List[int], target: int) -> int:
-        result = 0
         n = len(nums)
-        for i in range(n):
-            count = 0
-            for j in range(i,n):
-                if nums[j] == target:
-                    count+=1
-                if count * 2 > (j-i+1):
-                    result+=1
-        return result
+        proArr = [0 for _ in range(n)]
+        for i,num in enumerate(nums):
+            if num == target:
+                proArr[i] = 1
+            else:
+                proArr[i] = -1
+        sl = SortedList()
+        sl.add(0)
+        prefix = 0
+        count = 0
+        for val in proArr:
+            prefix+=val
+            sl.add(prefix)
+            count += sl.bisect_left(prefix)
+        return count
                 
                 
