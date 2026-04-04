@@ -17,16 +17,12 @@ class Solution:
                 while p2 + 1 < len(p) and p[p2+1] == '*':
                     p2 += 2
                 return p2 == len(p)
-            # print(p1,p2)
             if p2 + 1 < len(p) and p[p2+1] == '*':
                 if p[p2] == '.':
-                    for i in range(p1,len(s)+1):
-                        print("Hello",i)
-                        if fun(i,p2+2):
-                            return True
+                    if fun(p1,p2+2) or fun(p1+1,p2):
+                        return True
                 else:
                     i = p1
-                    #pick 0 prev
                     if fun(i,p2+2):
                         return True
                     while i < len(s) and s[i] == p[p2]:
