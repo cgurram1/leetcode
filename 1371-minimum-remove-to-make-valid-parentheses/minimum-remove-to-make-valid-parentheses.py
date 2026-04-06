@@ -1,30 +1,31 @@
+"""
+
+lee(t(c)o( d  e  ) 
+0123456789 10 11 12
+
+
+3: (1,0)
+
+
+
+"""
 class Solution:
     def minRemoveToMakeValid(self, s: str) -> str:
-        parCount = 0
+        toRemove = set()
         stack = []
-        for ch in s:
+        for i,ch in enumerate(s):
             if ch == '(':
-                parCount+=1
-                stack.append(ch)
+                stack.append(i)
             elif ch == ')':
-                if parCount > 0:
-                    res = ")"
-                    while(stack[-1] != '('):
-                        res = stack[-1] + res
-                        stack.pop(-1)
-                    res = '(' + res
-                    parCount-=1
-                    stack.pop(-1)
-                    stack.append(res)
-            else:
-                stack.append(ch)
-        res = "".join(stack)
-        i = len(res)-1
-        while(parCount > 0):
-            if res[i] == '(':
-                res = res[:i] + res[i+1:]
-                parCount-=1
-            i-=1
-        return res
-                    
-            
+                if not stack:
+                    toRemove.add(i)
+                else:
+                    stack.pop()
+        result = []
+        st = set(stack)
+        for i,ch in enumerate(s):
+            if i not in st and i not in toRemove:
+                result.append(ch)
+        return "".join(result)
+
+
