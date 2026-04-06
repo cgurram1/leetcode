@@ -11,21 +11,18 @@ lee(t(c)o( d  e  )
 """
 class Solution:
     def minRemoveToMakeValid(self, s: str) -> str:
-        toRemove = set()
+        s = list(s)
         stack = []
-        for i,ch in enumerate(s):
+        for i, ch in enumerate(s):
             if ch == '(':
                 stack.append(i)
             elif ch == ')':
-                if not stack:
-                    toRemove.add(i)
-                else:
+                if stack:
                     stack.pop()
-        result = []
-        st = set(stack)
-        for i,ch in enumerate(s):
-            if i not in st and i not in toRemove:
-                result.append(ch)
-        return "".join(result)
+                else:
+                    s[i] = ''
+        while stack:
+            s[stack.pop()] = ''
+        return ''.join(s)
 
 
