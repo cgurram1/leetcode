@@ -8,6 +8,6 @@ class Solution:
         for i in range(1,len(nums)+1):
             for r in range(s//2+1):
                 dp[i][r] = dp[i-1][r]
-                if nums[i-1] <= r:
+                if not dp[i][r] and nums[i-1] <= r:
                     dp[i][r] = dp[i][r] or dp[i-1][r - nums[i-1]]
         return dp[len(nums)][s//2]
