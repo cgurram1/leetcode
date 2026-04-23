@@ -16,7 +16,11 @@ class Solution:
             right = bisect_left(res2,remain)
             if right < len(res2):
                 res = min(res, res2[right] - remain)
+            if res == 0:
+                return 0
             if right > 0:
                 res = min(res, remain - res2[right-1])
+            if res == 0:
+                return 0
         return res
 
