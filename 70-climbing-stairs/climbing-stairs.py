@@ -1,13 +1,9 @@
 class Solution:
     def climbStairs(self, n: int) -> int:
-        memo = {}
-        def myRec(ind):
-            if ind in memo:
-                return memo[ind]
-            if ind > n:
-                return 0
-            if ind == n:
-                return 1
-            memo[ind] = myRec(ind + 1) + myRec(ind + 2)
-            return memo[ind]
-        return myRec(0)
+        dp = [i for i in range(n+1)]
+        if n <= 2:
+            return dp[n]
+        for i in range(3,n+1):
+            dp[i] = dp[i-1] + dp[i-2]
+        return dp[n]
+
