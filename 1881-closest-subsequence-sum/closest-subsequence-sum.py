@@ -2,11 +2,11 @@ class Solution:
     def minAbsDifference(self, nums: List[int], goal: int) -> int:
         def fun(index,s,arr,res):
             if index == len(arr):
-                res.append(s)
+                res.add(s)
                 return
             fun(index + 1,s + arr[index],arr,res)
             fun(index + 1, s, arr,res)
-        res1,res2 = [],[]
+        res1,res2 = set(),set()
         fun(0,0,nums[:len(nums)//2],res1)
         fun(0,0,nums[len(nums)//2:],res2)
         res = float('inf')
