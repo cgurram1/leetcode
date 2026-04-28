@@ -13,6 +13,8 @@ class MyCalendarTwo:
             if curr_val >= self.maxDays:
                 self.bookings[startTime] = self.bookings.get(startTime,0) - 1
                 self.bookings[endTime] = self.bookings.get(endTime,0) + 1
+                if self.bookings[startTime] == 0:
+                    del self.bookings[startTime]
                 return False
         return True
 
