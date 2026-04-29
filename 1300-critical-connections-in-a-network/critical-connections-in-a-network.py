@@ -18,6 +18,6 @@ class Solution:
                         if minTimes[adjNode] > disc[node]:
                             critical.append([node, adjNode])
                     else:
-                        minTimes[node] = min(minTimes[node], disc[adjNode])
+                        minTimes[node] = min(minTimes[node], minTimes[adjNode])
         fun(0,0,-1)
         return critical
