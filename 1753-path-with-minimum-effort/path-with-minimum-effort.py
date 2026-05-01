@@ -1,22 +1,22 @@
 class Solution:
     def minimumEffortPath(self, heights: List[List[int]]) -> int:
-        pq = []
-        heapq.heappush(pq, (0,0,0))
-        dirs = [(1,0),(0,1),(-1,0),(0,-1)]
-
-        dists = [[float('inf')] * len(heights[0]) for _ in range(len(heights))]
-
-        dists[0][0] = 0
-        newEffort = float('-inf')
-        while pq:
-            currWeight, ci, cj = heapq.heappop(pq)
-            if currWeight > dists[ci][cj]:
-                continue
+        dists = [[float('inf') for _ in range(len(heights[0]))] for _ in range(len(heights))]
+        # print(dists)
+        queue = []
+        heapq.heappush(queue, (0,0,0))
+        dirs = [(1,0),(0,1),(0,-1),(-1,0)]
+        n,m = len(heights),len(heights[0])
+        while queue:
+            weight,r,c = heapq.heappop(queue)
+            if (r,c) == (n-1,m-1):
+                return weight
             for di,dj in dirs:
-                ni,nj = ci + di, cj + dj
-                if 0 <= ni < len(heights) and 0 <= nj < len(heights[0]):
-                    newEffort = max(currWeight, abs(heights[ni][nj] - heights[ci][cj]))
-                    if dists[ni][nj] > newEffort:
-                        dists[ni][nj] = newEffort
-                        heapq.heappush(pq,(dists[ni][nj],ni,nj))
-        return dists[len(heights)-1][len(heights[0])-1]
+                ni,nj = r + di, c + dj
+                if 0 <= ni < n and 0 <= nj < m:
+                    nextWeight = max(weight, abs(heights[r][c] - heights[ni][nj]))
+                    if dists[ni][nj] > nextWeight:
+                        dists[ni][nj] = nextWeight
+                        heapq.heappush(queue,(nextWeight,ni,nj))
+        return -1
+
+            
