@@ -10,6 +10,8 @@ class Solution:
             for i in range(index+1,len(s)+1):
                 if s[index] != '0' and 0 < int(s[index:i]) <= 26:
                     ans+=fun(i)
+                else:
+                    break
             dp[index] = ans
             return ans
         return fun(0)
