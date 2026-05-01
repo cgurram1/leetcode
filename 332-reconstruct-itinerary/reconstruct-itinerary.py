@@ -1,16 +1,16 @@
 class Solution:
     def findItinerary(self, tickets: List[List[str]]) -> List[str]:
-        adjList = defaultdict(list)
-        for fr,to in tickets:
-            heapq.heappush(adjList[fr],to)
+        queue = []
+        adjDict = {}
+        for ticket in tickets:
+            if ticket[0] not in adjDict:
+                adjDict[ticket[0]] = [ticket[1]]
+            else:
+                heapq.heappush(adjDict[ticket[0]],ticket[1])
         result = []
-        def dfs(fr):
-            while adjList[fr]:
-                nxt = heapq.heappop(adjList[fr])
-                dfs(nxt)
-            result.append(fr)
-            print(result)
-        dfs("JFK")
+        def fun(start):
+            while start in adjDict and adjDict[start]:
+                fun(heapq.heappop(adjDict[start]))
+            result.append(start)
+        fun("JFK")
         return result[::-1]
-
-
