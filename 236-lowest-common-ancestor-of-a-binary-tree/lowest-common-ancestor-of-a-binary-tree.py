@@ -8,7 +8,7 @@
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
         def LCA(node):
-            if node.val == p.val or node.val == q.val:
+            if node == p or node == q:
                 return node
 
             left = None
