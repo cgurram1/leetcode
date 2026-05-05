@@ -1,21 +1,24 @@
+"""
+[0,1,1,2]
+
+"""
 class Solution:
     def longestConsecutive(self, nums: List[int]) -> int:
-        set_nums = set(nums)
-        visited_set = set()
-        count = 0
-        for i in set_nums:
-            if i not in visited_set:
-                curr_count = 1
-                prev = i - 1
-                Next = i + 1
-                while(prev in set_nums):
-                    curr_count+=1
-                    visited_set.add(prev)
-                    prev-=1
-                while(Next in set_nums):
-                    curr_count+=1
-                    visited_set.add(Next)
-                    Next+=1
-                count = max(count,curr_count)
-        return count
-                
+        nums = list(set(nums))
+        nums.sort()
+        count = 1
+        res = 0
+
+        left = 0
+        right = 0
+        while right < len(nums):
+            if left == right:
+                count = 1
+                right+=1
+            while right < len(nums) and nums[right] == nums[right-1] + 1:
+                right+=1
+            res = max(res, right - left)
+            left = right
+        return res
+
+            
