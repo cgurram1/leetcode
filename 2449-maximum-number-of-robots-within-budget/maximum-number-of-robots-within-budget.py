@@ -8,12 +8,11 @@ class Solution:
             prefixSum[i] = prefixSum[i-1] + runningCosts[i]
         left = 0
         maxLength = 0
+        currBudget = 0
         for right in range(n):
             heapq.heappush(pq,(-chargeTimes[right],right))
             while pq and pq[0][1] < left:
-                # print(left,pq[-1])
                 heapq.heappop(pq)
-            # print(pq)
             maxVal = -pq[0][0]
             sRunning = 0
             if left > 0:
