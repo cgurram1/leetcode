@@ -3,8 +3,6 @@ class Solution:
                     original: List[str], changed: List[str],
                     cost: List[int]) -> int:
 
-        from collections import defaultdict
-
         adjMap = defaultdict(list)
         chars = set()
         distsMap = {}
