@@ -6,19 +6,18 @@
 #         self.right = right
 class Solution:
     def insertIntoBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
-        queue = deque()
-        queue.append(root)
-        if root == None:
-            return TreeNode(val)
-        while queue:
-            popped = queue.popleft()
-            if val < popped.val:
-                if popped.left == None:
-                    popped.left = TreeNode(val)
-                    return root
-                queue.append(popped.left)
+        def insert(node):
+            if val < node.val and node.left == None:
+                node.left = TreeNode(val)
+                return
+            if val > node.val and node.right == None:
+                node.right = TreeNode(val)
+                return
+            if val < node.val:
+                insert(node.left)
             else:
-                if popped.right == None:
-                    popped.right = TreeNode(val)
-                    return root
-                queue.append(popped.right)
+                insert(node.right)
+        if not root:
+            return TreeNode(val)
+        insert(root)
+        return root
