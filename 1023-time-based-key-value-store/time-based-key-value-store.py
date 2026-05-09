@@ -14,11 +14,9 @@ class TimeMap:
 
     def get(self, key: str, timestamp: int) -> str:
         sd = self.timeMap[key].bisect_right(timestamp)
-        # print(sd)
-        # print(self.timeMap[key].items())
         if sd == 0:
             return ""
-        return self.timeMap[key].items()[sd-1][1]
+        return self.timeMap[key].peekitem(sd-1)[1]
         
 
 
