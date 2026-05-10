@@ -21,10 +21,11 @@ class Solution:
         edges.sort(reverse=True)
         count = 0
         for edge in edges:
-            if edge[0] == 3 and find(edge[1],1) != find(edge[2],1):
-                union(edge[1],edge[2],1)
-                union(edge[1],edge[2],2)
-                count+=1
+            if edge[0] == 3:
+                if find(edge[1],1) != find(edge[2],1):
+                    union(edge[1],edge[2],1)
+                    union(edge[1],edge[2],2)
+                    count+=1
             elif find(edge[1],edge[0]) != find(edge[2],edge[0]):
                 union(edge[1],edge[2],edge[0])
                 count+=1
