@@ -11,6 +11,8 @@ class Solution:
             if node.left:
                 fun(node.left)
             res.append(node.val)
+            if len(res) == k:
+                return True
             if node.right:
                 fun(node.right)
         fun(root)
