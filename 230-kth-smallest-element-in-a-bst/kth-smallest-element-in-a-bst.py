@@ -16,7 +16,6 @@ class Solution:
             if node.right:
                 fun(node.right)
         fun(root)
-        print(res)
         return res[k-1]
         
             
