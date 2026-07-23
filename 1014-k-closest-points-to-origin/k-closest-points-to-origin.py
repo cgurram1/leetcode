@@ -5,9 +5,7 @@ class Solution:
             heapq.heappush(res,(-1*math.sqrt(point[0]**2 + point[1]**2),point))
             if len(res) > k:
                 heapq.heappop(res)
-        ans = [None for _ in range(k)]
-        i = 0
+        ans = []
         while res:
-            ans[i] = heapq.heappop(res)[1]
-            i+=1
+            ans.append(heapq.heappop(res)[1])
         return ans
